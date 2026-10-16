@@ -358,13 +358,13 @@ describe('the login the conversation belongs to', () => {
 
 describe('the workspace the conversation is about', () => {
   it('drops the conversation when the workspace is replaced (Start fresh), its answer included, keeping what is being typed', async () => {
-    let ws: string | null = 'w-1/h-ledgerlark'
+    let ws: string | null = 'w-1/h-moonrise'
     const { store, calls, data, a } = setup({ workspace: () => ws })
     void a.send('Who starts next week?')
     calls[0].resolve({ ok: true, history: answered([], 'Who starts next week?', '[Lucas Ferreira](#person.p-lucas) starts Monday.'), remainingToday: 9, truncated: false })
     await new Promise((r) => setTimeout(r, 0))
-    expect(store.getState().workspace).toBe('w-1/h-ledgerlark')
-    expect(JSON.parse(data.get(CONVERSATION_KEY)!).workspace).toBe('w-1/h-ledgerlark')
+    expect(store.getState().workspace).toBe('w-1/h-moonrise')
+    expect(JSON.parse(data.get(CONVERSATION_KEY)!).workspace).toBe('w-1/h-moonrise')
     // A question on its way about the old records, and something typed.
     void a.send('And his manager?')
     a.setDraft('Who is Quillfin hiring?')

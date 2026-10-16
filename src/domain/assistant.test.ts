@@ -78,7 +78,7 @@ describe('assistantNameError', () => {
 })
 
 describe('the context note', () => {
-  const note = '<app_context>You are Lark, the HR assistant inside First Twenty for Ledgerlark.</app_context>'
+  const note = '<app_context>You are Lark, the HR assistant inside First Twenty for Moonrise.</app_context>'
 
   it('is recognized only as a whole note', () => {
     expect(isAssistantContext(note)).toBe(true)

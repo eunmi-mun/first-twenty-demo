@@ -14,7 +14,7 @@ describe('buildICS', () => {
           end: '2026-10-13T17:30:00.000Z',
           location: 'https://meet.example.com/room',
           url: 'https://meet.example.com/room',
-          organizer: { name: 'Maya Raman', email: 'maya@ledgerlark.com' },
+          organizer: { name: 'Maya Raman', email: 'maya@moonrise.com' },
           attendees: [{ name: 'Alex Kim', email: 'alex@example.com' }],
         },
       ]),
@@ -22,7 +22,7 @@ describe('buildICS', () => {
     expect(ics).toContain('DTSTART:20261013T170000Z\r\nDTEND:20261013T173000Z')
     expect(ics).toContain('LOCATION:https://meet.example.com/room')
     expect(ics).toContain('URL:https://meet.example.com/room')
-    expect(ics).toContain('ORGANIZER;CN=Maya Raman:mailto:maya@ledgerlark.com')
+    expect(ics).toContain('ORGANIZER;CN=Maya Raman:mailto:maya@moonrise.com')
     expect(ics).toContain('ATTENDEE;CN=Alex Kim;RSVP=TRUE:mailto:alex@example.com')
   })
 

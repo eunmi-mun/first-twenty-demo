@@ -7,7 +7,7 @@ import { type ISODate, nowISO, today } from '@/lib/dates'
 import { downloadFile } from '@/lib/files'
 import { getDB, useDB } from './db'
 
-/** A company name as the start of a file name: 'Ledgerlark, Inc.' -> 'ledgerlark-inc' ('first-twenty' when blank). */
+/** A company name as the start of a file name: 'Moonrise, Inc.' -> 'moonrise-inc' ('first-twenty' when blank). */
 export function companyStem(companyName: string): string {
   const stem = companyName
     .toLowerCase()
@@ -17,7 +17,7 @@ export function companyStem(companyName: string): string {
   return stem || 'first-twenty'
 }
 
-/** Backup file name: 'ledgerlark-backup-2026-10-09.json'. */
+/** Backup file name: 'moonrise-backup-2026-10-09.json'. */
 export function backupFileName(companyName: string, date: ISODate): string {
   return `${companyStem(companyName)}-backup-${date}.json`
 }

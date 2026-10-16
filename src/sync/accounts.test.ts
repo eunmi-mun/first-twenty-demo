@@ -27,7 +27,7 @@ afterEach(() => {
   vi.useRealTimers()
 })
 
-function device(api: SyncApi, db: DB = makeDB({ sample: true, company: 'Ledgerlark' }), storage = memoryStorage()) {
+function device(api: SyncApi, db: DB = makeDB({ sample: true, company: 'Moonrise' }), storage = memoryStorage()) {
   const store = createTestStore(db)
   const status = createStatusStore()
   const env = testEnv()

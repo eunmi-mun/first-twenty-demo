@@ -47,7 +47,7 @@ describe('what creating or joining a company replaces here', () => {
   it('names a company of this browser\'s own, never the sample', () => {
     expect(replacedHere(summary({ companyName: 'Acme' }))).toBe('Acme')
     expect(replacedHere(summary({ companyName: '  ' }))).toBe('an unnamed company')
-    expect(replacedHere(summary({ companyName: 'Ledgerlark, Inc.', sample: true }))).toBeNull()
+    expect(replacedHere(summary({ companyName: 'Moonrise, Inc.', sample: true }))).toBeNull()
   })
 })
 

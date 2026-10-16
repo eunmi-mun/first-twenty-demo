@@ -125,7 +125,7 @@ describe('turnsFromHistory', () => {
   })
 
   it('never shows the context note the server puts before a question, and leaves the history as it came', () => {
-    const note = '<app_context>You are Lark, the HR assistant inside First Twenty for Ledgerlark. Today is Sunday, October 11, 2026 (2026-10-11) in California, where the company keeps its dates.</app_context>'
+    const note = '<app_context>You are Lark, the HR assistant inside First Twenty for Moonrise. Today is Sunday, October 11, 2026 (2026-10-11) in California, where the company keeps its dates.</app_context>'
     const withNote = deepFreeze([
       { role: 'user', content: [{ type: 'text', text: note }, { type: 'text', text: 'Who starts next week?' }] },
       { role: 'assistant', content: [{ type: 'text', text: 'Nobody.' }] },

@@ -17,7 +17,7 @@ vi.mock('@/data/seed', async () => {
 })
 
 function fixture(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
   const person = db.people[0]
   db.checklists.push(
     generateChecklist(db, {
@@ -67,10 +67,10 @@ describe('setTaskStatus', () => {
 })
 
 function staffed(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
   const base = db.people[0]
   for (const [id, first] of [['p-lena', 'Lena'], ['p-kwame', 'Kwame'], ['p-sofia', 'Sofia'], ['p-nikhil', 'Nikhil']] as const) {
-    db.people.push({ ...base, id, firstName: first, lastName: 'Tester', workEmail: `${first.toLowerCase()}@ledgerlark.com`, isFounder: false, managerId: 'p-founder', startDate: '2026-06-01', hireNumber: db.people.length + 1 })
+    db.people.push({ ...base, id, firstName: first, lastName: 'Tester', workEmail: `${first.toLowerCase()}@moonrise.com`, isFounder: false, managerId: 'p-founder', startDate: '2026-06-01', hireNumber: db.people.length + 1 })
   }
   return db
 }

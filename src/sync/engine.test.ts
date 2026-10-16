@@ -737,7 +737,7 @@ describe('the sample company', () => {
     const server = new FakeServer()
     const a = await uploader(server)
     const pushes = server.pushes.length
-    a.store.getState().replace(makeDB({ sample: true, company: 'Ledgerlark' }), 'Reset to the sample company')
+    a.store.getState().replace(makeDB({ sample: true, company: 'Moonrise' }), 'Reset to the sample company')
     expect(a.st()).toMatchObject({ status: 'local', hold: 'sample', mode: 'server' })
     a.mutate(add('p-sample-edit'))
     a.page.emit('focus')
@@ -770,14 +770,14 @@ describe('the sample company', () => {
 
   it('uploads the sample only when the user explicitly includes it', async () => {
     const server = new FakeServer()
-    const d = device(server, makeDB({ sample: true, company: 'Ledgerlark' }))
+    const d = device(server, makeDB({ sample: true, company: 'Moonrise' }))
     const refused = await d.engine.uploadLocal()
     expect(refused).toMatchObject({ ok: false, kind: 'sample' })
     if (!refused.ok) expect(refused.message).toMatch(/sample company never syncs/)
     expect(server.hasWorkspace).toBe(false)
     expect(await d.engine.uploadLocal({ includeSample: true })).toEqual({ ok: true })
     await d.engine.whenIdle()
-    expect(server.snapshot().company.name).toBe('Ledgerlark')
+    expect(server.snapshot().company.name).toBe('Moonrise')
     d.mutate(add('p-in-sample'))
     await quiet(d)
     expect(server.record('people', 'p-in-sample')).toBeTruthy()
@@ -1381,7 +1381,7 @@ describe('the sample company, then Undo (F7)', () => {
   it('Undo after loading the sample ends the hold and later edits sync', async () => {
     const server = new FakeServer()
     const a = await uploader(server)
-    a.store.getState().replace(makeDB({ sample: true, company: 'Ledgerlark' }), 'Reset to the sample company')
+    a.store.getState().replace(makeDB({ sample: true, company: 'Moonrise' }), 'Reset to the sample company')
     expect(a.st().hold).toBe('sample')
     a.mutate(add('p-sample-edit'))
     a.store.getState().undo()
@@ -1542,7 +1542,7 @@ describe('signing out and forgetting this browser (SEC-2)', () => {
     const reload = vi.fn()
     const db = makeDB()
     db.people.push(makePerson('p-1'))
-    const d = device(server, db, memoryStorage(), { wipeLocal, reload, freshDB: () => makeDB({ sample: true, company: 'Ledgerlark' }) })
+    const d = device(server, db, memoryStorage(), { wipeLocal, reload, freshDB: () => makeDB({ sample: true, company: 'Moonrise' }) })
     return Object.assign(d, { wipeLocal, reload })
   }
 
@@ -1558,7 +1558,7 @@ describe('signing out and forgetting this browser (SEC-2)', () => {
     expect(a.wipeLocal).toHaveBeenCalledOnce()
     expect(a.reload).toHaveBeenCalledOnce()
     expect(a.storage.data.has(SYNC_STORAGE_KEY)).toBe(false)
-    expect(a.db().company.name).toBe('Ledgerlark')
+    expect(a.db().company.name).toBe('Moonrise')
     expect(a.db().people.some((p) => p.id === 'p-1')).toBe(false)
     expect(a.store.getState().past).toEqual([])
     expect(a.st()).toMatchObject({ status: 'local', mode: 'local', pending: 0, user: null })
@@ -1607,7 +1607,7 @@ describe('sign-outs the server could not confirm (security F1, F2)', () => {
     const reload = vi.fn()
     const db = makeDB()
     db.people.push(makePerson('p-1'))
-    const d = device(server, db, storage, { wipeLocal, reload, freshDB: () => makeDB({ sample: true, company: 'Ledgerlark' }) })
+    const d = device(server, db, storage, { wipeLocal, reload, freshDB: () => makeDB({ sample: true, company: 'Moonrise' }) })
     return Object.assign(d, { wipeLocal, reload })
   }
 
@@ -1768,14 +1768,14 @@ describe('another tab removed this browser\'s data (F3)', () => {
     const persistStore = vi.fn(() => true)
     const db = makeDB()
     db.people.push(makePerson('p-1'))
-    const tab = device(server, db, memoryStorage(), { persistStore, freshDB: () => makeDB({ sample: true, company: 'Ledgerlark' }) })
+    const tab = device(server, db, memoryStorage(), { persistStore, freshDB: () => makeDB({ sample: true, company: 'Moonrise' }) })
     expect(await tab.engine.uploadLocal()).toEqual({ ok: true })
     await tab.engine.whenIdle()
     // The other tab wiped the storage.
     tab.storage.data.clear()
     persistStore.mockClear()
     tab.engine.dropLocal()
-    expect(tab.db().company.name).toBe('Ledgerlark')
+    expect(tab.db().company.name).toBe('Moonrise')
     expect(tab.store.getState().past).toEqual([])
     expect(tab.st()).toMatchObject({ mode: 'local', status: 'local', user: null })
     tab.mutate(add('p-after'))

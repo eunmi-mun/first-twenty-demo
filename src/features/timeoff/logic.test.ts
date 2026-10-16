@@ -382,10 +382,10 @@ describe('holidays', () => {
   it('lists, copies and exports a year', () => {
     expect(holidaysForYear(HOL, 2026)).toHaveLength(11)
     expect(holidaysForYear(HOL, 2027)).toHaveLength(11)
-    const text = holidaysText(HOL, 'Ledgerlark', 2026)
-    expect(text.split('\n')[0]).toBe('Ledgerlark holidays 2026')
+    const text = holidaysText(HOL, 'Moonrise', 2026)
+    expect(text.split('\n')[0]).toBe('Moonrise holidays 2026')
     expect(text).toContain('Thu, Nov 26: Thanksgiving')
-    const ics = holidaysICS(HOL, 'Ledgerlark', 2027)
+    const ics = holidaysICS(HOL, 'Moonrise', 2027)
     expect(ics.match(/BEGIN:VEVENT/g)).toHaveLength(11)
     expect(ics).toContain('DTSTART;VALUE=DATE:20271125')
     expect(ics).toContain('DTEND;VALUE=DATE:20271126')

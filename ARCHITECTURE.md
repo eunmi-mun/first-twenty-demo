@@ -4,7 +4,7 @@ First Twenty is a lightweight applicant tracking system (ATS) and people system 
 from a solo founder to about 20 employees. It runs entirely in the browser: no server, no accounts, data
 in `localStorage`, and `npm run build` produces one self-contained `first-twenty.html`.
 
-The sample company is **Ledgerlark, Inc.** (fictional), a seed-stage financial AI startup in downtown
+The sample company is **Moonrise, Inc.** (fictional), a seed-stage financial AI startup in downtown
 San Jose, California, that builds AI agents for month-end close, reconciliation and audit prep.
 
 Read this file before changing code. `docs/SPEC.md` holds the product spec (what to build);

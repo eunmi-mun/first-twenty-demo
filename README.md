@@ -2,7 +2,7 @@
 
 **Live demo: https://unique-name27.github.io/first-twenty-demo/**
 
-- **The app:** the full ATS and HCM with a fictional sample company, Ledgerlark. It runs entirely in
+- **The app:** the full ATS and HCM with a fictional sample company, Moonrise. It runs entirely in
   your browser; nothing you type leaves it. Try Hiring, People, Comp and plan, and Compliance, or
   start fresh as a solo founder from Settings, Data.
 - **Careers site:** https://unique-name27.github.io/first-twenty-demo/careers/ is generated from the
@@ -26,7 +26,7 @@ A lightweight applicant tracking system (ATS) and people system (HCM) for a comp
 founder to about 20 employees. It runs entirely in your browser: no server, no accounts, nothing sent
 anywhere. Data lives in this browser's storage; download a backup from Settings, Data.
 
-It ships with **Ledgerlark**, a fictional seed-stage financial AI company in downtown San Jose, so every
+It ships with **Moonrise**, a fictional seed-stage financial AI company in downtown San Jose, so every
 screen has realistic work in it on day one. Start fresh as a solo founder from Settings, Data whenever
 you are ready.
 
@@ -105,7 +105,7 @@ the system of record for those.
 - `docs/SPEC.md`: product spec
 - `docs/LAW.md`: verified California, San Jose and federal facts behind the compliance features (October 2026)
 - `docs/BENCHMARKS.md`: market data behind the sample company
-- `docs/SAMPLE.md`: the Ledgerlark story
+- `docs/SAMPLE.md`: the Moonrise story
 - `docs/SERVER.md`: run the optional server on EC2 next to Postgres (setup, updates, backups, restore)
 - `docs/SYNC.md`: the server and sync contract (tables, `/api` protocol, sync engine, security rules)
 

@@ -20,7 +20,7 @@ function mk(id: string, firstName: string, lastName: string, x: Partial<Person> 
     id,
     firstName,
     lastName,
-    workEmail: `${firstName.toLowerCase()}@ledgerlark.com`,
+    workEmail: `${firstName.toLowerCase()}@moonrise.com`,
     departmentId: 'd-eng',
     familyId: 'f-eng',
     levelId: 'lv-l3',
@@ -38,8 +38,8 @@ function mk(id: string, firstName: string, lastName: string, x: Partial<Person> 
 
 /** Founder plus hires 2-15 from docs/SAMPLE.md, with the org bits the hiring seed reads. */
 function fixture(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
-  db.company.website = 'ledgerlark.com'
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  db.company.website = 'moonrise.com'
   db.company.soc2Enabled = true
   db.departments.push({ id: 'd-ai', name: 'Applied AI', headId: 'p-priya' }, { id: 'd-acct', name: 'Accounting', headId: 'p-elena' })
   db.locations.push({ id: 'loc-remote-tx', name: 'Remote (Texas)', kind: 'remote', state: 'TX', minWageHourly: 7.25 })

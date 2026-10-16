@@ -108,7 +108,7 @@ function gatedClient(): { client: AssistantClient; release: () => void; started:
   return { client, release: () => openGate(), started: () => runs }
 }
 
-/** Signs in as the owner and uploads the sample company (Ledgerlark, whose assistant is Lark). */
+/** Signs in as the owner and uploads the sample company (Moonrise, whose assistant is Lark). */
 async function owner(app: FastifyInstance): Promise<string> {
   const cookie = await login(app)
   const up = await app.inject({ method: 'PUT', url: '/api/workspace', headers: { ...CSRF, cookie }, payload: { db: sample } })
@@ -208,7 +208,7 @@ describe('POST /api/assistant/chat', () => {
     expect(done.history[0]).toEqual({
       role: 'user',
       content: [
-        { type: 'text', text: expect.stringMatching(/^<app_context>You are Lark, the HR assistant inside First Twenty for Ledgerlark\. Today is .+<\/app_context>$/) },
+        { type: 'text', text: expect.stringMatching(/^<app_context>You are Lark, the HR assistant inside First Twenty for Moonrise\. Today is .+<\/app_context>$/) },
         { type: 'text', text: 'Who starts next week?' },
       ],
     })

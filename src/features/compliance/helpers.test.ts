@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { type CalendarItem, evaluateAll, evaluateRule, nextThreshold, RULE_BY_ID } from '@/domain/compliance'
-import { addMany, addPerson, ledgerlarkLite, makeDB } from '@/domain/compliance/testkit'
+import { addMany, addPerson, moonriseLite, makeDB } from '@/domain/compliance/testkit'
 import type { Policy } from '@/domain/types'
 import {
   acksOwed,
@@ -40,7 +40,7 @@ const D = '2026-10-09'
 
 describe('rule cards', () => {
   it('labels states with a word and a tone', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const pay = evaluateRule(db, RULE_BY_ID['pay-scale-in-postings'], D)
     expect(pay.state).toBe('approaching')
     expect(stateChip(pay)).toEqual({ label: 'Approaching (Oct 19)', tone: 'warn' })
@@ -52,7 +52,7 @@ describe('rule cards', () => {
   })
 
   it('groups by threshold and event, with cards that need action first', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const groups = groupResults(evaluateAll(db, D))
     expect(groups.map((g) => g.key)).toEqual(['any', 'events', 't5', 't10', 't15', 't20', 'upcoming'])
     const t15 = groups.find((g) => g.key === 't15')
@@ -65,7 +65,7 @@ describe('rule cards', () => {
   })
 
   it('writes status lines and why text in plain words', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const pay = evaluateRule(db, RULE_BY_ID['pay-scale-in-postings'], D)
     expect(statusLine(pay)).toBe('Projected to apply on Oct 19, 2026.')
     expect(whyText(pay)).toBe('It starts at 15 employees. You have 14 now and reach 15 on Oct 19, 2026.')
@@ -83,7 +83,7 @@ describe('rule cards', () => {
   })
 
   it('counts overdue per-person deadlines under a rule as needing action', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     // Every setup step is done, so only the people with overdue harassment training keep the card open.
     db.complianceStatus['harassment-training'] = { actionsDone: { assign: '2025-09-02', 'crd-course': '2025-09-02', certificates: '2025-11-18' } }
     const r = evaluateRule(db, RULE_BY_ID['harassment-training'], D)
@@ -104,12 +104,12 @@ describe('rule cards', () => {
   })
 
   it('keeps a recorded deadline as the rule due date even when a follow-up is older', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     db.complianceStatus['harassment-training'] = { actionsDone: {}, dueOn: '2026-12-01' }
     const r = evaluateRule(db, RULE_BY_ID['harassment-training'], D)
     expect(r.dueOn).toBe('2026-02-18')
     expect(ruleOwnDue(r)).toEqual({ on: '2026-12-01', recorded: true })
-    const none = evaluateRule(ledgerlarkLite(), RULE_BY_ID['pay-scale-in-postings'], D)
+    const none = evaluateRule(moonriseLite(), RULE_BY_ID['pay-scale-in-postings'], D)
     expect(none.followUps).toBeUndefined()
     expect(stateChip(none).tone).toBe('warn')
   })
@@ -122,7 +122,7 @@ describe('rule cards', () => {
   })
 
   it('describes a yearly cycle', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     db.complianceStatus['sb294-annual-notice'] = { actionsDone: { 'year-2026': '2026-01-30' } }
     const r = evaluateRule(db, RULE_BY_ID['sb294-annual-notice'], D)
     expect(cycleLine(r)).toBe('Next due Feb 1, 2027; last done Jan 30, 2026.')
@@ -142,7 +142,7 @@ describe('rule cards', () => {
   })
 
   it('says a law that covers contracts from a later date is preparation, not in force since founding', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const r = evaluateRule(db, RULE_BY_ID['stay-or-pay-ban'], D)
     expect(statusLine(r)).toBe('Applies to contracts from Jan 1, 2027: prepare now. 0 of 2 done.')
     expect(whyText(r)).toBe('This covers every California employer, whatever the size, for contracts entered on or after Jan 1, 2027. Get ready before then.')
@@ -150,7 +150,7 @@ describe('rule cards', () => {
   })
 
   it('writes an estimated DE 1 due date as about, until the first payroll date is saved', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const est = evaluateRule(db, RULE_BY_ID['edd-registration'], D)
     expect(statusLine(est)).toBe('Applies since May 12, 2025; due about May 27, 2025. 0 of 2 done.')
     db.company.firstPayrollOn = '2025-05-15'
@@ -160,7 +160,7 @@ describe('rule cards', () => {
 
 describe('next threshold lead', () => {
   it('names what changes at 15 and notes the ranges', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const nt = nextThreshold(db, D)
     expect(nt?.n).toBe(15)
     if (!nt) return
@@ -174,7 +174,7 @@ describe('next threshold lead', () => {
 
 describe('posting block', () => {
   it('reads on with the posting sheet count while the legal rule is still approaching', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const pay = evaluateRule(db, RULE_BY_ID['pay-scale-in-postings'], D)
     expect(pay.state).toBe('approaching')
     const block = postingBlock(db, D)
@@ -245,7 +245,7 @@ describe('hire threshold preview', () => {
 
 describe('milestone story', () => {
   it('tells future crossings in the future tense', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     expect(futureCrossingText(db, { n: 15, date: '2026-10-19', direction: 'up', personId: 'p-lucas' })).toBe(
       'On track to cross 15 on Oct 19, 2026 when Lucas Ferreira starts.',
     )
@@ -256,7 +256,7 @@ describe('calendar', () => {
   const item = (p: Partial<CalendarItem> & { id: string; date: string }): CalendarItem => ({ title: 'x', kind: 'recurring', statutory: false, ...p })
 
   it('knows how to mark each kind of item done', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     db.recurring.push({ id: 'rec-sb294', title: 'SB 294', cadence: 'annual', nextDueOn: '2027-02-01', ruleId: 'sb294-annual-notice' })
     db.recurring.push({ id: 'rec-x', title: 'Other', cadence: 'quarterly', nextDueOn: '2026-10-31' })
     expect(calendarDoneAction(db, item({ id: 'rec-rec-sb294-2027-02-01', date: '2027-02-01' }))).toEqual({
@@ -330,7 +330,7 @@ describe('policies', () => {
   })
 
   it('finds who still owes an acknowledgement and writes the reminder', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     db.policies = [handbook]
     for (const p of db.people) {
       if (['p-ravi', 'p-aisha', 'p-caleb', 'p-omar'].includes(p.id)) continue

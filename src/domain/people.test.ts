@@ -4,13 +4,13 @@ import { daysAway, priorStint } from '@/domain/people'
 import type { DB, Person } from '@/domain/types'
 
 function db(): DB {
-  const d = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  const d = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
   const omar: Person = {
     ...d.people[0],
     id: 'p-omar',
     firstName: 'Omar',
     lastName: 'Haddad',
-    workEmail: 'omar@ledgerlark.com',
+    workEmail: 'omar@moonrise.com',
     personalEmail: 'omar.h@example.com',
     isFounder: false,
     startDate: '2025-01-13',

@@ -45,7 +45,7 @@ import {
 
 describe('slugs', () => {
   it('turn a company name into lowercase a-z, 0-9 and single dashes, at most 40 characters', () => {
-    expect(slugBase('Ledgerlark, Inc.')).toBe('ledgerlark-inc')
+    expect(slugBase('Moonrise, Inc.')).toBe('moonrise-inc')
     expect(slugBase('  --Spaced   out, punctuated!! Co.--  ')).toBe('spaced-out-punctuated-co')
     expect(slugBase('Société Générale')).toBe('societe-generale')
     expect(slugBase('ACME 2026')).toBe('acme-2026')
@@ -80,7 +80,7 @@ describe('slugs', () => {
   })
 
   it('are always valid', () => {
-    for (const name of ['Ledgerlark, Inc.', 'X', 'a'.repeat(80), 'Société', '1-2-3', 'assets']) {
+    for (const name of ['Moonrise, Inc.', 'X', 'a'.repeat(80), 'Société', '1-2-3', 'assets']) {
       for (let n = 1; n < 12; n++) expect(isValidSlug(slugCandidate(slugBase(name), n)), `${name} ${n}`).toBe(true)
       for (let n = 0; n < 12; n++) expect(isValidSlug(demoSlug(slugBase(name), randomSlugSuffix())), `${name} demo`).toBe(true)
     }

@@ -1,4 +1,4 @@
-// Ledgerlark sample: company profile, departments, locations and pay bands (docs/SAMPLE.md).
+// Moonrise sample: company profile, departments, locations and pay bands (docs/SAMPLE.md).
 // Also the small helpers every seed file shares (activity rows with fixed timestamps and ids).
 //
 // Module rule: functions only, no module-level runtime constants. The seed can run while the store
@@ -116,7 +116,7 @@ function locations(): Location[] {
 type BandRow = [levelId: string, min: number, mid: number, max: number, eqMin: number, eqMax: number, variablePct?: number, flsa?: FLSA]
 
 /**
- * Ledgerlark's own bands (San Jose, seed stage, base pay in USD; equity as a fraction of 12,000,000 fully
+ * Moonrise's own bands (San Jose, seed stage, base pay in USD; equity as a fraction of 12,000,000 fully
  * diluted shares). Grounded in docs/BENCHMARKS.md: a-comp-staff-swe, a-comp-senior-backend, a-comp-fullstack,
  * a-comp-data-engineer and a-comp-security-compliance (engineering); a-comp-applied-ai-engineer and
  * b-ai-ml-premium (ML about 8% higher base, about 1.3x equity); a-comp-product-designer; a-comp-product-manager;
@@ -167,7 +167,7 @@ function bandTable(): Record<string, BandRow[]> {
   }
 }
 
-export function ledgerlarkBands(): Band[] {
+export function moonriseBands(): Band[] {
   return Object.entries(bandTable()).flatMap(([familyId, rows]) =>
     rows.map(([levelId, min, mid, max, equityMinPct, equityMaxPct, variablePct, flsa]) => {
       const band: Band = {
@@ -189,8 +189,8 @@ export function ledgerlarkBands(): Band[] {
 
 export function applyCompany(db: Draft<DB>): void {
   const c = db.company
-  c.name = 'Ledgerlark'
-  c.legalName = 'Ledgerlark, Inc.'
+  c.name = 'Moonrise'
+  c.legalName = 'Moonrise, Inc.'
   c.tagline = 'AI close agents for mid-market controllers'
   c.hq = { street: '99 S Almaden Blvd', suite: 'Suite 410', city: 'San Jose', state: 'CA', zip: '95113' }
   c.foundedOn = '2025-02-03'
@@ -227,7 +227,7 @@ export function applyCompany(db: Draft<DB>): void {
     backgroundCheck: 'https://example.com/background-checks',
     eSign: 'https://example.com/e-sign',
     capTable: 'https://example.com/cap-table',
-    calendly: 'https://example.com/schedule/ledgerlark',
+    calendly: 'https://example.com/schedule/moonrise',
     training: 'https://example.com/security-training',
     handbook: 'https://example.com/handbook',
   }
@@ -253,17 +253,17 @@ export function applyCompany(db: Draft<DB>): void {
   c.groupHealthPlanStartedOn = '2025-05-12'
   c.soc2Enabled = true
   c.soc2 = { typeIReportOn: '2026-07-15', typeIIWindow: { from: '2026-08-01', to: '2027-01-31' } }
-  c.website = 'https://ledgerlark.com'
+  c.website = 'https://moonrise.com'
 
   db.departments = departments()
   db.locations = locations()
-  db.bands = ledgerlarkBands()
+  db.bands = moonriseBands()
 
   seedLog(db, '2025-02-03', 'p-founder', {
     entityType: 'company',
     entityId: 'company',
     kind: 'company_created',
-    text: 'Set up Ledgerlark, Inc. in First Twenty',
+    text: 'Set up Moonrise, Inc. in First Twenty',
   })
   seedLog(db, '2026-02-27', 'p-founder', {
     entityType: 'settings',

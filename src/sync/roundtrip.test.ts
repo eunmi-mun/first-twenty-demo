@@ -676,7 +676,7 @@ describe.skipIf(!available)('round trip against the real server', () => {
   }, 60_000)
 
   it('refuses to upload the sample company unless asked', async () => {
-    const s = browser(makeDB({ sample: true, company: 'Ledgerlark' }))
+    const s = browser(makeDB({ sample: true, company: 'Moonrise' }))
     expect(await s.engine.signIn(h.ADMIN.email, h.ADMIN.password)).toMatchObject({ ok: true })
     expect(await s.engine.uploadLocal()).toMatchObject({ ok: false, kind: 'sample' })
     expect(await s.engine.inspectServer()).toEqual({ ok: true, empty: true })

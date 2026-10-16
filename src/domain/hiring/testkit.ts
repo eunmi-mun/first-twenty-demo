@@ -12,7 +12,7 @@ export function person(id: string, firstName: string, lastName: string, extra: P
     id,
     firstName,
     lastName,
-    workEmail: `${firstName.toLowerCase()}@ledgerlark.com`,
+    workEmail: `${firstName.toLowerCase()}@moonrise.com`,
     title: 'Engineer',
     departmentId: 'd-eng',
     familyId: 'f-eng',
@@ -64,10 +64,10 @@ export function application(id: string, candidateId: string, jobId: string, extr
 }
 
 export function fixtureDB(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
   // The sample company's own role templates, as the sample seed installs them (blankDB has the neutral starters).
   db.settings.roleTemplates = structuredClone(SAMPLE_ROLE_TEMPLATES)
-  db.company.tagline = 'Ledgerlark builds AI agents that help mid-market controllers close the books faster.'
+  db.company.tagline = 'Moonrise builds AI agents that help mid-market controllers close the books faster.'
   db.company.hq = { street: '99 S Almaden Blvd', suite: 'Suite 410', city: 'San Jose', state: 'CA', zip: '95113' }
   db.company.workersCompCarrier = { name: 'Golden Poppy Mutual', phone: '(800) 555-0199', policyNumber: 'WC-2026-118', address: '1 Market St, San Francisco, CA 94105' }
   db.company.phone = '(408) 555-0100'

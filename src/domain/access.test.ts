@@ -1,4 +1,4 @@
-// Access rules that protect pay and independent scorecards, checked on the Ledgerlark sample.
+// Access rules that protect pay and independent scorecards, checked on the Moonrise sample.
 // The store loads first so every seed and domain module finishes loading before the sample is built.
 import '@/store/db'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'

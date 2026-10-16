@@ -70,7 +70,7 @@ describe.skipIf(!available)('a demo server, end to end', () => {
   })
 
   /** One browser: its own store, storage and cookie jar. */
-  function browser(start: DB = makeDB({ sample: true, company: 'Ledgerlark' })) {
+  function browser(start: DB = makeDB({ sample: true, company: 'Moonrise' })) {
     const store = createTestStore(start)
     const status = createStatusStore()
     const api = createApi({ fetch: injectFetch(() => app) })

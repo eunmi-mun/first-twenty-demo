@@ -910,7 +910,7 @@ describe('workspace', () => {
     expect(snap.json().db.company.name).toBe('Renamed')
   })
 
-  it('round-trips the full Ledgerlark sample exactly', async () => {
+  it('round-trips the full Moonrise sample exactly', async () => {
     const h = await authed()
     const sample = buildSampleDB()
     const put = await upload(h, sample)

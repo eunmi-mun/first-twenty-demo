@@ -1,4 +1,4 @@
-// The Ledgerlark sample (fictional), anchored to Friday 2026-10-09. See docs/SAMPLE.md.
+// The Moonrise sample (fictional), anchored to Friday 2026-10-09. See docs/SAMPLE.md.
 // Order matters: company and org first, then people (with comp, checklists, trainings), equity,
 // time off and leave, contractors and advisors, compliance state, hiring, which hires the two incoming
 // people through the real Hire flow (src/domain/lifecycle.ts), and last the pay run situations (./payroll).
@@ -31,7 +31,7 @@ export function buildSampleDB(): DB {
 
 function build(): DB {
   const base = blankDB({
-    companyName: 'Ledgerlark',
+    companyName: 'Moonrise',
     founderFirstName: 'Maya',
     founderLastName: 'Raman',
     founderTitle: 'Founder and CEO',

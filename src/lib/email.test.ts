@@ -4,7 +4,7 @@ import { fillTemplate, mailtoHref, pickRejectionTemplate, suggestCallForRejectio
 
 describe('fillTemplate', () => {
   it('fills merge fields, tolerating spaces inside the braces', () => {
-    expect(fillTemplate('Hi {{firstName}}, welcome to {{ companyName }}.', { firstName: 'Mei', companyName: 'Ledgerlark' })).toBe('Hi Mei, welcome to Ledgerlark.')
+    expect(fillTemplate('Hi {{firstName}}, welcome to {{ companyName }}.', { firstName: 'Mei', companyName: 'Moonrise' })).toBe('Hi Mei, welcome to Moonrise.')
   })
 
   it('drops missing fields and collapses the blank lines they leave', () => {

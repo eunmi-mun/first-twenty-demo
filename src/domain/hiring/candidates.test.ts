@@ -109,7 +109,7 @@ describe('messages', () => {
   it('writes a stage-aware rejection and suggests a call for final rounds', () => {
     const db = fixtureDB()
     const early = rejectionMessage(db, 'a-chen')!
-    expect(early).toMatchObject({ to: 'chen.wu@example.com', subject: 'Your application to Ledgerlark', suggestCall: false, templateId: 'em-reject-early' })
+    expect(early).toMatchObject({ to: 'chen.wu@example.com', subject: 'Your application to Moonrise', suggestCall: false, templateId: 'em-reject-early' })
     expect(early.body).toContain('Hi Chen,')
     expect(early.body.trim().endsWith('Maya Raman')).toBe(true)
     const late = rejectionMessage(db, 'a-alex', { tone: 'brief', senderId: 'p-tomas' })!
@@ -127,7 +127,7 @@ describe('messages', () => {
     const note = closeOutMessage(db, 'j-fullstack')!
     expect(note.bcc).toEqual(['ben.ortiz@example.com'])
     expect(note.applicationIds).toEqual(['a-ben'])
-    expect(note.subject).toBe('An update on the Senior full-stack engineer role at Ledgerlark')
+    expect(note.subject).toBe('An update on the Senior full-stack engineer role at Moonrise')
     expect(note.mailto).toContain('bcc=ben.ortiz@example.com')
   })
 
@@ -137,7 +137,7 @@ describe('messages', () => {
     })
     const m = offerNudgeMessage(db, 'o-1')!
     expect(m.body).toContain('It is open until Wed Oct 14.')
-    expect(m.subject).toBe('Checking in on your Ledgerlark offer')
+    expect(m.subject).toBe('Checking in on your Moonrise offer')
     expect(offerNudgeMessage(db, 'o-1', { date: '2026-10-14' })?.body).toContain('It is open until Wed Oct 14.')
   })
 
@@ -161,7 +161,7 @@ describe('messages', () => {
     expect(note.from).toBe('')
     expect(note.mailto.startsWith('mailto:?bcc=')).toBe(true)
     const withEmail = closeOutMessage(fixtureDB(), 'j-fullstack', { senderId: 'p-tomas' })!
-    expect(withEmail.from).toBe('tomas@ledgerlark.com')
-    expect(withEmail.mailto.startsWith('mailto:tomas@ledgerlark.com?bcc=')).toBe(true)
+    expect(withEmail.from).toBe('tomas@moonrise.com')
+    expect(withEmail.mailto.startsWith('mailto:tomas@moonrise.com?bcc=')).toBe(true)
   })
 })

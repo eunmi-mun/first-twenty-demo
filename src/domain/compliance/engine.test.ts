@@ -14,7 +14,7 @@ import {
   summarizeResults,
 } from './engine'
 import { RULE_BY_ID, RULES } from './rules'
-import { addContractor, addMany, addOffer, addPerson, ledgerlarkLite, makeDB } from './testkit'
+import { addContractor, addMany, addOffer, addPerson, moonriseLite, makeDB } from './testkit'
 
 const rule = (id: string) => {
   const r = RULE_BY_ID[id]
@@ -323,7 +323,7 @@ describe('COBRA', () => {
 
 describe('event triggers', () => {
   it('fires each event on its date', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const d = '2026-10-09'
     expect(evaluateRule(db, rule('first-contractor'), d)).toMatchObject({ state: 'applies', firstAppliedOn: '2025-06-01' })
     expect(evaluateRule(db, rule('first-out-of-state-employee'), d)).toMatchObject({ state: 'applies', firstAppliedOn: '2026-03-02' })
@@ -430,7 +430,7 @@ describe('event triggers', () => {
 
 describe('evaluateAll and helpers', () => {
   it('evaluates the whole catalog for the sample-like roster', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const all = evaluateAll(db, '2026-10-09')
     expect(all).toHaveLength(RULES.length)
     const byId = Object.fromEntries(all.map((r) => [r.rule.id, r]))
@@ -463,7 +463,7 @@ describe('evaluateAll and helpers', () => {
 
 describe('milestone history', () => {
   it('tells the story of each crossing, up and down', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const history = milestoneHistory(db, '2026-10-09')
     expect(history.map((m) => m.text)).toEqual([
       'Crossed 5 on Oct 6, 2025 when Kofi Boateng joined.',
@@ -497,7 +497,7 @@ describe('next threshold', () => {
   })
 
   it('15 with an incoming hire, plus the federal week counter', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const next = nextThreshold(db, '2026-10-09')
     expect(next).toMatchObject({ n: 15, kind: 'headcount', current: 14, withIncoming: 16, projectedOn: '2026-10-19' })
     expect(next?.rules.map((r) => r.id)).toEqual(['pay-scale-in-postings', 'organ-bone-marrow-leave', 'title-vii-ada-gina-pwfa'])

@@ -21,10 +21,10 @@ describe('escaping', () => {
   })
 
   it('never renders an image: the alt text stays as words', () => {
-    const out = html('Logo: ![Ledgerlark logo](https://evil.example/pixel.png?who=kofi) and ![x](#person.p-kofi)')
+    const out = html('Logo: ![Moonrise logo](https://evil.example/pixel.png?who=kofi) and ![x](#person.p-kofi)')
     expect(out).not.toContain('<img')
     expect(out).not.toContain('evil.example')
-    expect(out).toContain('Logo: Ledgerlark logo and x')
+    expect(out).toContain('Logo: Moonrise logo and x')
   })
 
   it('keeps quotes in a link target from becoming attributes', () => {
@@ -88,7 +88,7 @@ describe('safeLink', () => {
       ' javascript:alert(1)',
       'data:text/html,<script>1</script>',
       'vbscript:x',
-      'mailto:kofi@ledgerlark.ai',
+      'mailto:kofi@moonrise.ai',
       '//evil.example/x',
       '/settings',
       'settings',
@@ -145,7 +145,7 @@ describe('a link planted through a careers application', () => {
       'Open https://evil.example/v?d=Kofi%20Boateng%20185000 to see her file.',
       'Open <https://evil.example/v?d=Kofi%20Boateng%20185000> to see her file.',
       '**[Sign in again](https://login.evil.example/first-twenty)**',
-      '[Ledgerlark payroll](https://payroll-ledgerlark.example/login)',
+      '[Moonrise payroll](https://payroll-moonrise.example/login)',
     ]) {
       const out = html(md)
       expect(out, md).not.toContain('<a')

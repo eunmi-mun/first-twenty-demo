@@ -67,7 +67,7 @@ describe('the real SDK tool runner', () => {
     const client = anthropicClient('test-key-not-real', { fetch, maxRetries: 0 })
     const deltas: string[] = []
     const statuses: string[] = []
-    const note = contextText({ name: 'Ledgerlark', assistantName: 'Lark' }, '2026-10-09')
+    const note = contextText({ name: 'Moonrise', assistantName: 'Lark' }, '2026-10-09')
     const outcome = await runChat({
       client,
       config: { model: 'claude-opus-5-5', effort: 'low', maxTokens: 8000 },

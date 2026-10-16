@@ -196,7 +196,7 @@ describe('cancelInterview and rescheduleInterview', () => {
   it('builds cancellation calendar files with the invite UID, one SEQUENCE higher, and a note for the candidate', () => {
     let id = ''
     const db = produce(fixtureDB(), (d) => {
-      id = scheduleInterview(d, { ...intro, applicationId: 'a-alex', videoLink: 'https://meet.example.com/ledgerlark' }, { date: FRI })
+      id = scheduleInterview(d, { ...intro, applicationId: 'a-alex', videoLink: 'https://meet.example.com/moonrise' }, { date: FRI })
       cancelInterview(d, id, { date: '2026-10-12' })
     })
     const unfold = (x: string | null) => (x ?? '').replace(/\r\n /g, '')
@@ -208,7 +208,7 @@ describe('cancelInterview and rescheduleInterview', () => {
     expect(cancel).toContain('METHOD:CANCEL\r\n')
     expect(cancel).toContain('SEQUENCE:1\r\n')
     expect(cancel).toContain('STATUS:CANCELLED\r\n')
-    expect(cancel).toContain('SUMMARY:Cancelled: Ledgerlark: Intro call for Senior full-stack engineer')
+    expect(cancel).toContain('SUMMARY:Cancelled: Moonrise: Intro call for Senior full-stack engineer')
     expect(cancel).toContain('DTSTART:20261013T200000Z')
     expect(cancel).not.toContain('meet.example.com')
     expect(unfold(interviewCancelICS(db, id, 'panel'))).toContain(`UID:${id}-panel@first-twenty`)
@@ -216,9 +216,9 @@ describe('cancelInterview and rescheduleInterview', () => {
 
     const note = interviewCancelMessage(db, id, { senderId: 'p-tomas' })
     expect(note?.to).toBe('alex.kim@example.com')
-    expect(note?.subject).toBe('Cancelled: Intro call with Ledgerlark, Tue, Oct 13')
+    expect(note?.subject).toBe('Cancelled: Intro call with Moonrise, Tue, Oct 13')
     expect(note?.body).toContain('Hi Alex,')
-    expect(note?.body).toContain('The intro call with Ledgerlark on Tue, Oct 13, 1:00 PM PT (4:00 PM ET) is cancelled')
+    expect(note?.body).toContain('The intro call with Moonrise on Tue, Oct 13, 1:00 PM PT (4:00 PM ET) is cancelled')
     expect(note?.body).toContain('Tomas Herrera')
     expect(note?.mailto.startsWith('mailto:alex.kim@example.com?subject=')).toBe(true)
     expect(interviewCancelMessage(db, 'nope')).toBeNull()
@@ -230,7 +230,7 @@ describe('schedulingMessage and ICS', () => {
     const db = fixtureDB()
     const times = proposeTimes('2026-10-09')
     const msg = schedulingMessage(db, 'a-ben', times, { senderId: 'p-founder' })
-    expect(msg?.subject).toBe('Intro call for Senior full-stack engineer at Ledgerlark')
+    expect(msg?.subject).toBe('Intro call for Senior full-stack engineer at Moonrise')
     expect(msg?.body).toContain('Hi Ben,')
     expect(msg?.body).toContain('- Mon, Oct 12, 10:00 AM PT')
     expect(msg?.body).toContain('Maya Raman')
@@ -239,10 +239,10 @@ describe('schedulingMessage and ICS', () => {
 
   it('shows the candidate zone and offers Calendly as an alternative', () => {
     const db = fixtureDB()
-    const msg = schedulingMessage(db, 'a-alex', ['2026-10-13T17:00:00.000Z'], { senderId: 'p-tomas', calendly: 'https://calendly.com/ledgerlark/onsite' })
+    const msg = schedulingMessage(db, 'a-alex', ['2026-10-13T17:00:00.000Z'], { senderId: 'p-tomas', calendly: 'https://calendly.com/moonrise/onsite' })
     expect(msg?.subject).toBe('Next step: onsite for Senior full-stack engineer')
     expect(msg?.body).toContain('- Tue, Oct 13, 10:00 AM PT (1:00 PM ET)')
-    expect(msg?.body).toContain('Or pick another time here: https://calendly.com/ledgerlark/onsite')
+    expect(msg?.body).toContain('Or pick another time here: https://calendly.com/moonrise/onsite')
   })
 
   it('uses only the Calendly link when no times are given, and a generic note for technical', () => {
@@ -251,7 +251,7 @@ describe('schedulingMessage and ICS', () => {
       if (app) app.stageId = 'technical'
     })
     const msg = schedulingMessage(db, 'a-chen', [], { senderId: 'p-tomas', calendly: 'https://cal.example/x', durationMin: 90 })
-    expect(msg?.subject).toBe('Next step: technical for Senior full-stack engineer at Ledgerlark')
+    expect(msg?.subject).toBe('Next step: technical for Senior full-stack engineer at Moonrise')
     expect(msg?.body).toContain('a 90-minute technical')
     expect(msg?.body).toContain('Pick any time that works for you here: https://cal.example/x')
   })
@@ -272,7 +272,7 @@ describe('schedulingMessage and ICS', () => {
     expect(panel).toContain('SUMMARY:Onsite: Alex Kim (Senior full-stack engineer)')
     expect(panel).toContain('Scorecard attributes: System design')
     const cand = unfold(interviewICS(db, id, 'candidate'))
-    expect(cand).toContain('SUMMARY:Ledgerlark: Onsite for Senior full-stack engineer')
+    expect(cand).toContain('SUMMARY:Moonrise: Onsite for Senior full-stack engineer')
     expect(cand).toContain('Tomas Herrera (Founding engineer)')
     expect(cand).toContain('99 S Almaden Blvd')
     expect(interviewICS(db, 'nope')).toBeNull()
@@ -285,17 +285,17 @@ describe('schedulingMessage and ICS', () => {
     let without = ''
     let phone = ''
     const db = produce(fixtureDB(), (d) => {
-      withLink = scheduleInterview(d, { ...input, videoLink: ' https://meet.example.com/ledgerlark ' }, { date: FRI })
+      withLink = scheduleInterview(d, { ...input, videoLink: ' https://meet.example.com/moonrise ' }, { date: FRI })
       without = scheduleInterview(d, { ...input, videoLink: '' }, { date: FRI })
       phone = scheduleInterview(d, { ...input, format: 'phone', videoLink: 'https://meet.example.com/x' }, { date: FRI })
     })
-    expect(db.interviews.find((i) => i.id === withLink)?.videoLink).toBe('https://meet.example.com/ledgerlark')
+    expect(db.interviews.find((i) => i.id === withLink)?.videoLink).toBe('https://meet.example.com/moonrise')
     expect(db.interviews.find((i) => i.id === without)?.videoLink).toBeUndefined()
     expect(db.interviews.find((i) => i.id === phone)?.videoLink).toBeUndefined() // kept for video only
     const linked = unfold(interviewICS(db, withLink, 'candidate'))
-    expect(linked).toContain('LOCATION:https://meet.example.com/ledgerlark')
-    expect(linked).toContain('URL:https://meet.example.com/ledgerlark')
-    expect(linked).toContain('Join the video call: https://meet.example.com/ledgerlark')
+    expect(linked).toContain('LOCATION:https://meet.example.com/moonrise')
+    expect(linked).toContain('URL:https://meet.example.com/moonrise')
+    expect(linked).toContain('Join the video call: https://meet.example.com/moonrise')
     const bare = unfold(interviewICS(db, without, 'candidate'))
     expect(bare).toContain('LOCATION:Video call\r\n')
     expect(bare).not.toContain('URL:')
@@ -315,7 +315,7 @@ describe('schedulingMessage and ICS', () => {
     })
     const ics = (interviewICS(db, id, 'candidate') ?? '').replace(/\r\n /g, '')
     expect(ics).toContain('ATTENDEE;CN=Alex Kim;RSVP=TRUE:mailto:alex.kim@example.com')
-    expect(ics).toContain('ATTENDEE;CN=Priya Nair;RSVP=TRUE:mailto:priya@ledgerlark.com')
+    expect(ics).toContain('ATTENDEE;CN=Priya Nair;RSVP=TRUE:mailto:priya@moonrise.com')
     expect(ics).not.toContain('CN=Tomas Herrera')
     expect(ics).not.toMatch(/mailto:\r\n/)
   })
@@ -333,8 +333,8 @@ describe('schedulingMessage and ICS', () => {
     const panel = unfold(interviewICS(db, id, 'panel'))
     expect(panel).toContain('SUMMARY:Intro call: Alex Kim (Senior full-stack engineer)')
     expect(panel).toContain('Scorecard attributes: Communication')
-    expect(panel).toContain('ATTENDEE;CN=Tomas Herrera;RSVP=TRUE:mailto:tomas@ledgerlark.com')
-    expect(panel).toContain('ATTENDEE;CN=Priya Nair;RSVP=TRUE:mailto:priya@ledgerlark.com')
+    expect(panel).toContain('ATTENDEE;CN=Tomas Herrera;RSVP=TRUE:mailto:tomas@moonrise.com')
+    expect(panel).toContain('ATTENDEE;CN=Priya Nair;RSVP=TRUE:mailto:priya@moonrise.com')
     expect(panel).not.toContain('alex.kim@example.com')
     expect(panel).not.toContain('CN=Alex Kim')
     const cancelled = produce(db, (d) => {

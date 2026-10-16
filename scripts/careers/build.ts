@@ -1,4 +1,4 @@
-// Static careers site for the First Twenty demo: the Ledgerlark sample's open jobs as plain HTML pages,
+// Static careers site for the First Twenty demo: the Moonrise sample's open jobs as plain HTML pages,
 // one CSS file, one small script for the demo apply form, and the Archivo font. No external requests,
 // relative links only, so the folder works under any GitHub Pages subpath (the app sits one level up).
 // The pages come from the shared careers renderer (src/careers/render.ts, demo mode), which the server
@@ -6,7 +6,7 @@
 //
 // Run: npx tsx scripts/careers/build.ts --out <dir>     (npm run build:careers writes dist-careers/)
 //
-// Ledgerlark, Inc. is fictional (docs/SAMPLE.md). Every page says so, and the apply form sends nothing:
+// Moonrise, Inc. is fictional (docs/SAMPLE.md). Every page says so, and the apply form sends nothing:
 // it has no action, uses method="dialog" (which never navigates or submits anywhere) and its script
 // only validates in the tab.
 //

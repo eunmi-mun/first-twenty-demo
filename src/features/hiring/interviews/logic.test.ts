@@ -247,10 +247,10 @@ describe('confirmation message', () => {
       durationMin: 75,
       format: 'video',
       panel: ['Hannah Kim', 'Ravi Subramanian'],
-      companyName: 'Ledgerlark',
+      companyName: 'Moonrise',
       senderName: 'Maya Raman',
     })
-    expect(body).toContain('You are confirmed for the agent design deep dive with Ledgerlark')
+    expect(body).toContain('You are confirmed for the agent design deep dive with Moonrise')
     expect(body).toContain('Mon, Oct 12, 10:00 AM PT (1:00 PM ET)')
     expect(body).toContain('It runs 75 minutes, on video')
     expect(body).toContain('You will meet Hannah Kim and Ravi Subramanian.')
@@ -279,10 +279,10 @@ describe('confirmation message', () => {
       durationMin: 30,
       format: 'video',
       panel: [],
-      companyName: 'Ledgerlark',
+      companyName: 'Moonrise',
       senderName: 'S',
     })
-    expect(body).toContain('Your intro call with Ledgerlark has moved from Tue, Oct 13, 1:00 PM PT to:\n\nThu, Oct 15, 10:00 AM PT')
+    expect(body).toContain('Your intro call with Moonrise has moved from Tue, Oct 13, 1:00 PM PT to:\n\nThu, Oct 15, 10:00 AM PT')
     expect(body).toContain('Please take the old time off your calendar.')
     expect(body).not.toContain('You are confirmed')
   })

@@ -1,4 +1,4 @@
-// Ledgerlark sample: time off requests across 2025-2026 and Tomas's protected leave (docs/SAMPLE.md).
+// Moonrise sample: time off requests across 2025-2026 and Tomas's protected leave (docs/SAMPLE.md).
 // Requests go through the real flow (createRequest, approveRequest) so hours skip weekends and company
 // holidays; vacation stays within what each person has accrued (15 days a year, earned per pay period).
 // Sick leave is California's front-loaded 40 hours a year, usable from day 90 (Labor Code 246).

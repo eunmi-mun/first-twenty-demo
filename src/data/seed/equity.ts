@@ -1,4 +1,4 @@
-// Ledgerlark sample: option pool, 409A history and grants (docs/SAMPLE.md). Cap table: 12,000,000 fully
+// Moonrise sample: option pool, 409A history and grants (docs/SAMPLE.md). Cap table: 12,000,000 fully
 // diluted = founder 7,000,000 + pre-seed conversion 900,000 + seed 2,400,000 + pool 1,700,000
 // (1,200,000 created 2025-04-20, +500,000 at the seed on 2026-02-24). Grant sizes for hires 2-5 follow the
 // Carta State of Seed medians by hire number (docs/BENCHMARKS.md b-equity-hires-1-5). Strike = the 409A in

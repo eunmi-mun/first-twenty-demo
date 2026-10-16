@@ -39,8 +39,8 @@ export type LinkOuts = {
 }
 
 export type Company = {
-  name: string // 'Ledgerlark'
-  legalName: string // 'Ledgerlark, Inc.'
+  name: string // 'Moonrise'
+  legalName: string // 'Moonrise, Inc.'
   tagline: string
   hq: Address
   foundedOn: ISODate

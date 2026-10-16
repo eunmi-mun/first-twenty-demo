@@ -1,4 +1,4 @@
-// Invariants for the composed Ledgerlark sample (buildSampleDB), built the way the app builds it.
+// Invariants for the composed Moonrise sample (buildSampleDB), built the way the app builds it.
 // Every check runs with the clock pretending today is the sample anchor, Friday 2026-10-09.
 // The store loads first so every seed and domain module finishes loading before the sample is built
 // (the store builds the sample on load; see the import note in src/domain/lifecycle.ts).
@@ -216,7 +216,7 @@ describe('composed sample: structure', () => {
   it('builds without throwing, flagged as the sample at the anchor', () => {
     expect(SAMPLE_ANCHOR).toBe(TODAY)
     expect(db.meta).toEqual({ createdOn: TODAY, sample: true, sampleAnchor: TODAY })
-    expect(db.company.name).toBe('Ledgerlark')
+    expect(db.company.name).toBe('Moonrise')
   })
 
   it('is deterministic and never depends on the real clock', () => {

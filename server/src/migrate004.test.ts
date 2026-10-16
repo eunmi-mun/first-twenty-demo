@@ -48,7 +48,7 @@ describe('migration 004 on a live database', () => {
     await db.query(`INSERT INTO sessions (token_hash, user_id, expires_at) VALUES ($1, $2, now() + interval '1 day')`, [hashToken('session-token'), userId])
     await db.query(`INSERT INTO trusted_devices (token_hash, user_id, expires_at) VALUES ('device', $1, now() + interval '180 days')`, [userId])
     await db.query(`UPDATE workspaces SET initialized_at = now(), last_seq = 2 WHERE id = 'default'`)
-    await db.query(`INSERT INTO workspace_docs (workspace_id, key, data, version) VALUES ('default', 'company', '{"name": "Ledgerlark, Inc."}', 1)`)
+    await db.query(`INSERT INTO workspace_docs (workspace_id, key, data, version) VALUES ('default', 'company', '{"name": "Moonrise, Inc."}', 1)`)
     await db.query(`INSERT INTO people (workspace_id, id, data, version) VALUES ('default', 'p-1', '{"id": "p-1", "firstName": "Ada"}', 2)`)
     await db.query(`INSERT INTO change_log (workspace_id, collection, record_id, op, version, data) VALUES ('default', 'people', 'p-1', 'upsert', 2, '{"id": "p-1"}')`)
     const historyBefore = (await db.query<{ h: string }>(`SELECT history_id::text AS h FROM workspaces`)).rows[0].h
@@ -60,7 +60,7 @@ describe('migration 004 on a live database', () => {
       `SELECT id, slug, keep, created_by, last_active_at IS NOT NULL AS active, history_id::text AS history_id, last_seq FROM workspaces`,
     )
     expect(ws.rows).toEqual([
-      { id: 'default', slug: 'ledgerlark-inc', keep: true, created_by: null, active: true, history_id: historyBefore, last_seq: expect.anything() },
+      { id: 'default', slug: 'moonrise-inc', keep: true, created_by: null, active: true, history_id: historyBefore, last_seq: expect.anything() },
     ])
     expect((await db.query(`SELECT email, workspace_id FROM users`)).rows).toEqual([{ email: 'owner@example.com', workspace_id: 'default' }])
     expect((await db.query('SELECT 1 FROM sessions')).rows).toHaveLength(1)

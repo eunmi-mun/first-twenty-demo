@@ -53,8 +53,8 @@ const START = '2026-10-19'
 // ---------------------------------------------------------------------------------------------
 
 function baseDB(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
-  db.company.website = 'https://www.ledgerlark.com'
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  db.company.website = 'https://www.moonrise.com'
   db.equity.valuations.push({ id: 'v-1', effectiveOn: '2026-03-20', fmvPerShare: 1.15, provider: 'Test valuation', expiresOn: '2027-03-20' })
   return db
 }
@@ -64,7 +64,7 @@ function addPerson(db: DB, id: string, over: Partial<Person> = {}): Person {
     id,
     firstName: id.slice(2, 3).toUpperCase() + id.slice(3),
     lastName: 'Tester',
-    workEmail: `${id.slice(2)}@ledgerlark.com`,
+    workEmail: `${id.slice(2)}@moonrise.com`,
     title: 'Software engineer',
     departmentId: 'd-eng',
     familyId: 'f-eng',
@@ -233,7 +233,7 @@ describe('hireFromOffer', () => {
     expect(p).toMatchObject({
       firstName: 'Lucas',
       lastName: 'Ferreira',
-      workEmail: 'lucas@ledgerlark.com',
+      workEmail: 'lucas@moonrise.com',
       personalEmail: 'lucas.f@example.com',
       hireNumber: 2,
       title: 'Senior data engineer',
@@ -316,10 +316,10 @@ describe('hireFromOffer', () => {
 
   it('keeps ids and work emails unique', () => {
     const db = hiringDB()
-    addPerson(db, 'p-lucas', { workEmail: 'lucas@ledgerlark.com' })
+    addPerson(db, 'p-lucas', { workEmail: 'lucas@moonrise.com' })
     const { db: next, result } = run(db, (d) => hireFromOffer(d, 'o-lucas', { date: TODAY }))
     expect(result).toBe('p-lucas-ferreira')
-    expect(next.people.find((p) => p.id === result)?.workEmail).toBe('lucas.ferreira@ledgerlark.com')
+    expect(next.people.find((p) => p.id === result)?.workEmail).toBe('lucas.ferreira@moonrise.com')
     expect(next.people.find((p) => p.id === result)?.hireNumber).toBe(3)
   })
 
@@ -397,8 +397,8 @@ describe('parsing helpers', () => {
   })
 
   it('derives the company domain from the website or the founder email, never from the name', () => {
-    expect(companyDomain({ website: 'https://www.ledgerlark.com/about' })).toBe('ledgerlark.com')
-    expect(companyDomain({ website: 'https://www.ledgerlark.com/about' }, 'maya@other.com')).toBe('ledgerlark.com')
+    expect(companyDomain({ website: 'https://www.moonrise.com/about' })).toBe('moonrise.com')
+    expect(companyDomain({ website: 'https://www.moonrise.com/about' }, 'maya@other.com')).toBe('moonrise.com')
     expect(companyDomain({}, 'Maya@TallyHawk.io')).toBe('tallyhawk.io')
     // A personal mailbox says nothing about the company domain
     expect(companyDomain({}, 'maya.raman@gmail.com')).toBeNull()
@@ -1195,8 +1195,8 @@ describe('hireFromOffer carries the whole offer onto the record', () => {
     // The founder's own company address is enough
     const own = hiringDB()
     delete own.company.website
-    own.people[0].workEmail = 'maya@ledgerlark.ai'
-    expect(run(own, (d) => hireFromOffer(d, 'o-lucas', { date: TODAY })).db.people.find((p) => p.id === 'p-lucas')?.workEmail).toBe('lucas@ledgerlark.ai')
+    own.people[0].workEmail = 'maya@moonrise.ai'
+    expect(run(own, (d) => hireFromOffer(d, 'o-lucas', { date: TODAY })).db.people.find((p) => p.id === 'p-lucas')?.workEmail).toBe('lucas@moonrise.ai')
   })
 
   it('adds a filled plan line for a job outside the plan, but not a second seat for a rehire', () => {

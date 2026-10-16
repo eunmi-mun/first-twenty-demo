@@ -1,4 +1,4 @@
-// Ledgerlark sample: what the company has recorded against the compliance rule catalog
+// Moonrise sample: what the company has recorded against the compliance rule catalog
 // (src/domain/compliance/rules.ts) and its recurring obligations. Done dates follow the story in
 // docs/SAMPLE.md: workers' comp and EDD before the first payroll (2025-05-15), the 5-employee items
 // before Kofi's start (2025-10-06), the 401(k) and CalSavers exemption in January 2026, Texas before

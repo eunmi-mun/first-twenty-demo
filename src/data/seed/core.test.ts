@@ -1,4 +1,4 @@
-// Tests for the Ledgerlark sample's company, people, equity, time off, contractors and compliance seed
+// Tests for the Moonrise sample's company, people, equity, time off, contractors and compliance seed
 // (everything except hiring, which another seed file owns). Built the way ./index builds it, without hiring.
 import { produce } from 'immer'
 import { describe, expect, it, vi } from 'vitest'
@@ -32,7 +32,7 @@ vi.mock('@/data/seed', async () => {
 const TODAY = '2026-10-09'
 
 function build(): DB {
-  const base = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', founderTitle: 'Founder and CEO', foundedOn: '2025-02-03' })
+  const base = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', founderTitle: 'Founder and CEO', foundedOn: '2025-02-03' })
   return produce(base, (d) => {
     applyCompany(d)
     applyPeople(d)
@@ -82,8 +82,8 @@ describe('sample build', () => {
 })
 
 describe('company', () => {
-  it('has the Ledgerlark profile', () => {
-    expect(db.company.legalName).toBe('Ledgerlark, Inc.')
+  it('has the Moonrise profile', () => {
+    expect(db.company.legalName).toBe('Moonrise, Inc.')
     expect(db.company.hq).toEqual({ street: '99 S Almaden Blvd', suite: 'Suite 410', city: 'San Jose', state: 'CA', zip: '95113' })
     expect(db.company.fundingRounds.map((r) => [r.name, r.closedOn, r.amount])).toEqual([
       ['Pre-seed', '2025-04-15', 3_000_000],
@@ -139,7 +139,7 @@ describe('people', () => {
     expect(employedOn(db, TODAY).some((p) => p.id === 'p-omar')).toBe(false)
     expect(incomingOn(db, TODAY)).toEqual([])
     expect(headcountOn(db, '2025-10-06')).toBe(5)
-    expect(person('p-kofi').workEmail).toBe('kofi@ledgerlark.com')
+    expect(person('p-kofi').workEmail).toBe('kofi@moonrise.com')
     expect(person('p-tomas').fromCandidateId).toBe('c-hire-tomas')
     expect(person('p-aisha').fromCandidateId).toBe('c-hire-aisha')
     expect(person('p-founder').fromCandidateId).toBeUndefined()
@@ -362,7 +362,7 @@ describe('contractors and compliance', () => {
     for (const r of db.recurring) expect(!r.ruleId || r.ruleId === 'soc2-access-review' || r.ruleId === 'rate-review' || !!RULE_BY_ID[r.ruleId], r.id).toBe(true)
   })
 
-  it('shows what Ledgerlark has done as done and the SB 553 plan as open', () => {
+  it('shows what Moonrise has done as done and the SB 553 plan as open', () => {
     const results = new Map(evaluateAll(db, TODAY).map((r) => [r.rule.id, r]))
     for (const id of [
       'workers-comp',

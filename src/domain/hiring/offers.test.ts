@@ -336,9 +336,9 @@ describe('generated documents', () => {
   it('writes an offer letter with the required California terms and no dollar projections', () => {
     const db = withOffer()
     const letter = offerLetter(db, 'o-1')!
-    expect(letter.subject).toBe('Your offer from Ledgerlark')
+    expect(letter.subject).toBe('Your offer from Moonrise')
     const t = letter.text
-    expect(t).toContain('Ledgerlark, Inc.')
+    expect(t).toContain('Moonrise, Inc.')
     expect(t).toContain('99 S Almaden Blvd, Suite 410, San Jose, CA 95113')
     expect(t).toContain('reporting to Tomas Herrera, Founding engineer')
     expect(t).toContain('Your start date will be October 26, 2026')
@@ -398,7 +398,7 @@ describe('generated documents', () => {
     expect(n.text).toContain('$45.00 per hour (1.5 times')
     expect(n.text).toContain('$60.00 per hour (2 times)')
     expect(n.text).toContain('Regular payday: the 15th and the last day of each month')
-    expect(n.text).toContain('Legal name: Ledgerlark, Inc.')
+    expect(n.text).toContain('Legal name: Moonrise, Inc.')
     expect(n.text).toContain('Phone: (408) 555-0100')
     expect(n.text).toContain('Carrier: Golden Poppy Mutual')
     expect(n.text).toContain('Carrier address: 1 Market St, San Francisco, CA 94105')
@@ -1143,14 +1143,14 @@ describe('letters before Admin approves', () => {
   it('marks a letter and wage notice as a draft, not approved, in the preview, print and copied text', () => {
     const db = withOffer({ draftedById: 'p-tomas', draftedByRole: 'manager', flsa: 'non_exempt', payType: 'hourly', hourlyRate: 95, salary: undefined, exemptionBasis: undefined })
     const letter = offerLetter(db, 'o-1', { notApproved: true })!
-    expect(letter.subject).toBe('Draft, not approved: Your offer from Ledgerlark')
+    expect(letter.subject).toBe('Draft, not approved: Your offer from Moonrise')
     expect(letter.text.startsWith(notApprovedMark() + '\n\nOffer of employment: Senior full-stack engineer')).toBe(true)
     expect(letter.html.startsWith('<p class="draft-mark"><strong>Draft, not approved. Admin approves this offer before it goes out. Do not send this copy.</strong></p>\n<h1>')).toBe(true)
     const notice = wageNotice2810_5(db, { offerId: 'o-1', notApproved: true })!
     expect(notice.text.startsWith(notApprovedMark())).toBe(true)
     // The approved letter carries no mark.
     const plain = offerLetter(db, 'o-1')!
-    expect(plain.subject).toBe('Your offer from Ledgerlark')
+    expect(plain.subject).toBe('Your offer from Moonrise')
     expect(plain.text).not.toContain('not approved')
     expect(wageNotice2810_5(db, { offerId: 'o-1' })!.text).not.toContain('not approved')
   })

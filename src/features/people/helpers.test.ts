@@ -1,4 +1,4 @@
-// People feature helpers, checked against the Ledgerlark sample at its anchor date (Fri 2026-10-09).
+// People feature helpers, checked against the Moonrise sample at its anchor date (Fri 2026-10-09).
 import '@/store/db'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildSampleDB } from '@/data/seed'
@@ -398,14 +398,14 @@ describe('severance release', () => {
     expect(releaseTerms(true, true)).toMatchObject({ considerDays: 45, revokeDays: 7 })
   })
   it('drafts the required statements without amounts or ages', () => {
-    const small = releaseText({ company: 'Ledgerlark, Inc.', name: 'Elena Vasquez', lastDay: '2026-10-30', terms: releaseTerms(false, false) })
+    const small = releaseText({ company: 'Moonrise, Inc.', name: 'Elena Vasquez', lastDay: '2026-10-30', terms: releaseTerms(false, false) })
     expect(small).toContain('You have 5 business days from the day you receive this agreement')
     expect(small).toContain('right to consult an attorney')
     expect(small).toContain('Nothing in this agreement prevents you from discussing or disclosing information about unlawful acts in the workplace')
     expect(small).toContain('October 30, 2026')
     expect(small).not.toContain('revoke')
     expect(small).not.toMatch(/\$\d/)
-    const big = releaseText({ company: 'Ledgerlark, Inc.', name: 'Elena Vasquez', lastDay: '2026-10-30', terms: releaseTerms(true, true) })
+    const big = releaseText({ company: 'Moonrise, Inc.', name: 'Elena Vasquez', lastDay: '2026-10-30', terms: releaseTerms(true, true) })
     expect(big).toContain('You have 45 days')
     expect(big).toContain('7 days to revoke')
     expect(big).toContain('Age Discrimination in Employment Act')

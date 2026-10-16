@@ -1,4 +1,4 @@
-// The sample company's role templates (Ledgerlark, docs/SAMPLE.md): a financial AI startup that sells
+// The sample company's role templates (Moonrise, docs/SAMPLE.md): a financial AI startup that sells
 // month-end close and reconciliation agents to mid-market controllers (NetSuite, Sage Intacct, QuickBooks
 // Online). The sample seed installs them (src/data/seed/hiring.ts); a company that starts fresh gets the
 // company-neutral starter set instead (starterRoleTemplates.ts), since a posting goes out with this text.

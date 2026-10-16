@@ -129,7 +129,7 @@ describe('careers hosts', () => {
   it('list no companies on the landing page, and say anyone can create one', async () => {
     const res = await get('/')
     expect(res.headers['content-type']).toBe('text/html; charset=utf-8')
-    expect(res.body).not.toMatch(/Ledgerlark|Otherco|acme|other-co/)
+    expect(res.body).not.toMatch(/Moonrise|Otherco|acme|other-co/)
     expect(res.body).toContain('A company or job here may not be real')
     expect(res.body).toContain('href="https://hr.test/">Make a careers page in First Twenty')
     expectCareersHeaders(res)
@@ -168,7 +168,7 @@ describe('company pages', () => {
   it('list the company open roles, linked to their pages, and nothing of any other company', async () => {
     const res = await get('/acme/')
     expect(res.statusCode).toBe(200)
-    expect(res.body).toContain('<h1 class="pagehead__title">Work at Ledgerlark</h1>')
+    expect(res.body).toContain('<h1 class="pagehead__title">Work at Moonrise</h1>')
     for (const j of jobs) expect(res.body).toContain(`<a class="role__link" href="/acme/jobs/${jobAddress(j)}">`)
     expect(res.body).not.toContain('Otherco')
     expect(res.body).not.toContain('Other ')
@@ -201,7 +201,7 @@ describe('company pages', () => {
     // address with a fragment).
     expect(res.body).toContain(`method="post" action="${jobPath}/apply"`)
     expect(res.body).not.toContain('#apply-form"')
-    expect(res.body).toContain("Your application goes to Ledgerlark's hiring team in First Twenty (a demo server).")
+    expect(res.body).toContain("Your application goes to Moonrise's hiring team in First Twenty (a demo server).")
     expectCareersHeaders(res)
     const form = await get(`${jobPath}/apply`)
     expect(form.statusCode).toBe(303)
@@ -244,7 +244,7 @@ describe('company pages', () => {
     for (const url of ['/acme/careers', '/acme/jobs/x/y/z', '/acme/nothing/here']) {
       const res = await get(url)
       expect(res.statusCode, url).toBe(404)
-      expect(res.body, url).toContain('Ledgerlark has no page at this address')
+      expect(res.body, url).toContain('Moonrise has no page at this address')
       expect(res.body, url).toContain('<a class="brand" href="/acme/">')
     }
     // No company there, or one whose page is off: the general 404, the same for both.
@@ -482,7 +482,7 @@ describe('applying', () => {
       LIMITS.recordsPerDemoWorkspace = records + 1
       const res = await apply(`${jobPath}/apply`)
       expect(res.statusCode).toBe(503)
-      expect(res.body).toContain('Ledgerlark cannot take applications right now')
+      expect(res.body).toContain('Moonrise cannot take applications right now')
     } finally {
       LIMITS.recordsPerDemoWorkspace = saved
     }
@@ -523,7 +523,7 @@ describe('apply limits', () => {
     expect((await apply(`${jobPath}/apply`, { ...FORM, email: 'b@example.com' }, {}, '198.51.100.2', a)).statusCode).toBe(303)
     const full = await apply(`${jobPath}/apply`, { ...FORM, email: 'c@example.com' }, {}, '198.51.100.3', a)
     expect(full.statusCode).toBe(429)
-    expect(full.body).toContain('Ledgerlark has had many applications today')
+    expect(full.body).toContain('Moonrise has had many applications today')
     expect((await apply(`${otherJobPath}/apply`, { ...FORM, email: 'c@example.com' }, {}, '198.51.100.3', a)).statusCode).toBe(303)
     await a.close()
   })

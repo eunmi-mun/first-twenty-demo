@@ -10,7 +10,7 @@ afterEach(() => setClockOverride(null))
 
 describe('backup file names', () => {
   it('start with the company name, or first-twenty when there is none', () => {
-    expect(backupFileName('Ledgerlark, Inc.', '2026-10-09')).toBe('ledgerlark-inc-backup-2026-10-09.json')
+    expect(backupFileName('Moonrise, Inc.', '2026-10-09')).toBe('moonrise-inc-backup-2026-10-09.json')
     expect(backupFileName('', '2026-10-09')).toBe('first-twenty-backup-2026-10-09.json')
     expect(companyStem('  Acme & Sons  ')).toBe('acme-sons')
   })

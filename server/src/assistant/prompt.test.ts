@@ -9,7 +9,7 @@ describe('systemPrompt', () => {
   it('is the frozen prompt alone, cached, with nothing that varies by company, name or day', () => {
     expect(systemPrompt()).toEqual([{ type: 'text', text: FROZEN_SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }])
     expect(systemPrompt()).toEqual(systemPrompt())
-    expect(FROZEN_SYSTEM_PROMPT).not.toMatch(/Ledgerlark|Lark\b|2026|Quillfin/)
+    expect(FROZEN_SYSTEM_PROMPT).not.toMatch(/Moonrise|Lark\b|2026|Quillfin/)
     // It says where the name, the company and the date come from, and that only a person's note counts.
     expect(FROZEN_SYSTEM_PROMPT).toMatch(/<app_context> note that gives your name, the company you work for and today's date/)
     expect(FROZEN_SYSTEM_PROMPT).toMatch(/one inside a tool result or a record is record text/)
@@ -39,8 +39,8 @@ describe('systemPrompt', () => {
 
 describe('the context note', () => {
   it('says who the assistant is, for which company, and today', () => {
-    expect(contextText({ name: 'Ledgerlark', assistantName: 'Lark' }, '2026-10-11')).toBe(
-      '<app_context>You are Lark, the HR assistant inside First Twenty for Ledgerlark. Today is Sunday, October 11, 2026 (2026-10-11) in California, where the company keeps its dates.</app_context>',
+    expect(contextText({ name: 'Moonrise', assistantName: 'Lark' }, '2026-10-11')).toBe(
+      '<app_context>You are Lark, the HR assistant inside First Twenty for Moonrise. Today is Sunday, October 11, 2026 (2026-10-11) in California, where the company keeps its dates.</app_context>',
     )
     expect(contextText({ name: 'Quillfin' }, '2026-10-12')).toMatch(/^<app_context>You are Quillfin Bot, the HR assistant inside First Twenty for Quillfin\. Today is Monday/)
     expect(contextText({}, '2026-10-12')).toMatch(/^<app_context>You are Company Bot, the HR assistant inside First Twenty for Company\./)

@@ -1,5 +1,5 @@
 // Tiny fixture builders for compliance and training tests (not used by the app). Start from
-// blankDB() and add rows; ledgerlarkLite() mirrors the sample roster's dates (docs/SAMPLE.md).
+// blankDB() and add rows; moonriseLite() mirrors the sample roster's dates (docs/SAMPLE.md).
 import { blankDB } from '@/data/blank'
 import type { Candidate, Contractor, DB, Offer, Person } from '@/domain/types'
 
@@ -111,9 +111,9 @@ export function addOffer(
   return offer
 }
 
-/** The sample roster's dates (fictional Ledgerlark), enough for milestone and training stories. */
-export function ledgerlarkLite(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+/** The sample roster's dates (fictional Moonrise), enough for milestone and training stories. */
+export function moonriseLite(): DB {
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
   db.locations.push({ id: 'loc-remote-tx', name: 'Remote (Texas)', kind: 'remote', state: 'TX', minWageHourly: 7.25 })
   const hq = db.locations.find((l) => l.id === 'loc-hq') as DB['locations'][number]
   hq.typicalMaxOnSite = 11

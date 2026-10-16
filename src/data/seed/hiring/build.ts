@@ -1,4 +1,4 @@
-// Builds the Ledgerlark hiring sample (docs/SAMPLE.md) on an Immer draft: plan slots, historical
+// Builds the Moonrise hiring sample (docs/SAMPLE.md) on an Immer draft: plan slots, historical
 // filled jobs with each hire's application, interviews and accepted offer, the open jobs with their
 // pipelines, Daniel Reyes's offer waiting for approval, and the two incoming hires (Lucas Ferreira,
 // Mei Tanaka) run through the real offer and Hire flow (src/domain/lifecycle.ts hireFromOffer).

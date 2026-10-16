@@ -159,7 +159,7 @@ function IdentityPanel({ company }: { company: Company }) {
             if (has('stage')) c.stage = d.stage.trim()
             if (has('tagline')) c.tagline = d.tagline.trim()
             if (has('website')) {
-              // 'ledgerlark.ai' is saved as https://ledgerlark.ai, as Start fresh saves it.
+              // 'moonrise.ai' is saved as https://moonrise.ai, as Start fresh saves it.
               if (d.website.trim()) c.website = normalizeWebsite(d.website)
               else delete c.website
             }

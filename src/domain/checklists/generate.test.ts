@@ -24,8 +24,8 @@ import type { Checklist, Contractor, DB, Person } from '@/domain/types'
 // ---------------------------------------------------------------------------------------------
 
 function baseDB(): DB {
-  const db = blankDB({ companyName: 'Ledgerlark', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
-  db.company.website = 'https://www.ledgerlark.com'
+  const db = blankDB({ companyName: 'Moonrise', founderFirstName: 'Maya', founderLastName: 'Raman', foundedOn: '2025-02-03' })
+  db.company.website = 'https://www.moonrise.com'
   return db
 }
 
@@ -34,7 +34,7 @@ function addPerson(db: DB, id: string, over: Partial<Person> = {}): Person {
     id,
     firstName: id.slice(2, 3).toUpperCase() + id.slice(3),
     lastName: 'Tester',
-    workEmail: `${id.slice(2)}@ledgerlark.com`,
+    workEmail: `${id.slice(2)}@moonrise.com`,
     title: 'Software engineer',
     departmentId: 'd-eng',
     familyId: 'f-eng',

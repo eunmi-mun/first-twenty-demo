@@ -120,7 +120,7 @@ export function offerNudgeMessage(db: DB, offerId: ID, opts: { senderId?: ID; da
 /**
  * Note to the candidate that an interview is off: which one and when (Pacific, plus their time zone),
  * a request to take it off their calendar, and that a new time follows. The subject reads like the
- * confirmation's ('Cancelled: Intro call with Ledgerlark, Tue, Oct 13'). With `heldAt` (the call already
+ * confirmation's ('Cancelled: Intro call with Moonrise, Tue, Oct 13'). With `heldAt` (the call already
  * happened earlier and was logged in its place) it says so instead of promising a new time. Copy or open
  * in the mail app; nothing is sent from the app.
  */

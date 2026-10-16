@@ -3,7 +3,7 @@
 // the posting text First Twenty generates, rendered from one workspace's records.
 //
 // Two modes:
-// - demo: the Ledgerlark sample as static files. Ledgerlark is fictional (docs/SAMPLE.md): every page says
+// - demo: the Moonrise sample as static files. Moonrise is fictional (docs/SAMPLE.md): every page says
 //   so, links go to the app's hiring side, and the apply form sends nothing (method="dialog", apply.js).
 // - live: a company's careers page on a First Twenty demo server, rendered per request from its workspace.
 //   The apply form posts for real, into that company's pipeline, and every page says that anyone can

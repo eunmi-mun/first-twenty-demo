@@ -1,4 +1,4 @@
-# Sample company: Ledgerlark, Inc. (fictional)
+# Sample company: Moonrise, Inc. (fictional)
 
 The story bible for the sample data. Every name, company and investor here is invented. Numbers are
 grounded in `docs/BENCHMARKS.md` (2026 Bay Area pay-transparency postings, Carta, Gem, Ashby) and
@@ -7,8 +7,8 @@ the store shifts every date so "today" in the story is always today.
 
 ## Company
 
-- **Ledgerlark, Inc.**, Delaware C corporation, HQ 99 S Almaden Blvd, Suite 410, San Jose, CA 95113.
-  Hybrid: office days Tuesday to Thursday. Website ledgerlark.com (fictional).
+- **Moonrise, Inc.**, Delaware C corporation, HQ 99 S Almaden Blvd, Suite 410, San Jose, CA 95113.
+  Hybrid: office days Tuesday to Thursday. Website moonrise.com (fictional).
 - Builds AI "close agents" for mid-market controllers on NetSuite, Sage Intacct and QuickBooks Online:
   bank and card reconciliation, accrual suggestions, flux analysis, audit-ready workpapers.
 - Founded **2025-02-03** by **Maya Raman** (solo founder, CEO; formerly an ML lead on a small-business
@@ -97,7 +97,7 @@ Employed on 2026-10-09: **14** (all except Omar). Incoming:
 
 16. `p-lucas` Lucas Ferreira, Senior data engineer (backfill for Omar), L3 Senior (Software engineering),
     starts **Monday 2026-10-19**. $195,000 and a **$10,000 sign-on bonus** with his first check. 30,000 ISOs promised. Offer accepted 2026-09-30; background check
-    clear 2026-10-06. Onboarding checklist created; pre-start tasks partly done. **His start takes Ledgerlark to 15**,
+    clear 2026-10-06. Onboarding checklist created; pre-start tasks partly done. **His start takes Moonrise to 15**,
     which turns on pay scales in every job posting (SB 1162 / SB 642) and federal Title VII/ADA counting.
 17. `p-mei` Mei Tanaka, Senior ML engineer (agents), L3 Senior (Machine learning), starts **Monday 2026-11-02**.
     $228,000. 38,000 ISOs promised. Offer accepted 2026-10-07. H-1B transfer (already in the U.S. in valid

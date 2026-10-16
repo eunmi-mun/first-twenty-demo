@@ -80,7 +80,7 @@ describe('postingText', () => {
     })
     const t = postingText(db, 'j-fullstack')
     expect(t.startsWith('Senior full-stack engineer\nSan Jose, CA (hybrid) | Full time\n')).toBe(true)
-    expect(t).toContain('About Ledgerlark\nLedgerlark builds AI agents')
+    expect(t).toContain('About Moonrise\nMoonrise builds AI agents')
     expect(t).toContain("What you'll do")
     expect(t).toContain('Pay range: $180,000 to $235,000 base salary. This is a good-faith estimate of what we expect to pay.')
     expect(t).toContain('Equity: stock options of 0.1% to 0.35% of fully diluted shares, 4-year vesting with a 1-year cliff, then monthly.')
@@ -88,7 +88,7 @@ describe('postingText', () => {
     expect(t).toContain('We never ask about salary history.')
     expect(t).toContain('Visa sponsorship for this role is considered case by case.')
     expect(t).toContain('in a manner consistent with the California Fair Chance Act')
-    expect(t).toContain('Ledgerlark is an equal opportunity employer.')
+    expect(t).toContain('Moonrise is an equal opportunity employer.')
     expect(t.includes(String.fromCharCode(0x2014))).toBe(false)
   })
 

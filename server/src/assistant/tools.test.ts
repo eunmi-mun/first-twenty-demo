@@ -1,5 +1,5 @@
 // The assistant's tools against real workspaces in PGlite: what each one answers for the sample company
-// (Ledgerlark), that every one stays inside the workspace it was built for whatever ids it is handed (each
+// (Moonrise), that every one stays inside the workspace it was built for whatever ids it is handed (each
 // tool, both directions), the size cap, the privacy rules, and that the tool list is the same bytes every time.
 import type { BetaRunnableTool } from '@anthropic-ai/sdk/lib/tools/BetaRunnableTool'
 import { ToolError } from '@anthropic-ai/sdk/lib/tools/ToolError'
@@ -22,7 +22,7 @@ const SECRET = /zebra|Zuleika|secret-co/i
 let db: Db
 let sample: DB
 
-/** A second company whose every name carries a marker no Ledgerlark result may ever contain. */
+/** A second company whose every name carries a marker no Moonrise result may ever contain. */
 function otherCompany(): DB {
   const d = blankDB({ companyName: 'Secret-Co Zebra', founderFirstName: 'Zuleika', founderLastName: 'Zebra', foundedOn: '2026-01-05' })
   return {
@@ -98,7 +98,7 @@ describe('each tool on the sample company', () => {
   it('company_overview: the company, its headcount and today', async () => {
     const r = JSON.parse(await call(toolsFor('default'), 'company_overview'))
     expect(r.today).toBe(TODAY)
-    expect(r.company.name).toBe('Ledgerlark')
+    expect(r.company.name).toBe('Moonrise')
     expect(r.headcount).toBeGreaterThan(5)
     expect(r.departments.length).toBeGreaterThan(0)
     expect(r.links.people).toBe('#people')
@@ -247,7 +247,7 @@ describe('isolation', () => {
     ['law_facts', { topic: 'minimum wage' }],
   ]
 
-  it("never shows Ledgerlark another company's records, whatever ids a tool is handed", async () => {
+  it("never shows Moonrise another company's records, whatever ids a tool is handed", async () => {
     const tools = toolsFor('default')
     const seen = new Set<string>()
     for (const [name, input] of probes({ person: 'p-zebra', job: 'j-zebra', candidate: 'c-zebra' })) {
@@ -261,12 +261,12 @@ describe('isolation', () => {
     expect(await callError(tools, 'job_pipeline', { jobId: 'j-zebra' })).toMatch(/not_found/)
   })
 
-  it('never shows the other company Ledgerlark, even for ids both hold (p-founder) or only Ledgerlark holds', async () => {
+  it('never shows the other company Moonrise, even for ids both hold (p-founder) or only Moonrise holds', async () => {
     const tools = toolsFor(OTHER)
-    const ledgerlark = /Ledgerlark|Kofi|Boateng/
+    const moonrise = /Moonrise|Kofi|Boateng/
     for (const [name, input] of probes({ person: 'p-kofi', job: sample.jobs[0].id, candidate: sample.candidates[0].id })) {
       const out = (await callError(tools, name, input)) ?? (await call(tools, name, input))
-      expect(out, `${name} ${JSON.stringify(input)}`).not.toMatch(ledgerlark)
+      expect(out, `${name} ${JSON.stringify(input)}`).not.toMatch(moonrise)
     }
     const founder = JSON.parse(await call(tools, 'get_person', { personId: 'p-founder' }))
     expect(founder.person.name).toBe('Zuleika Zebra')

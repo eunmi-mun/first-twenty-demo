@@ -1,4 +1,4 @@
-// Ledgerlark sample: what pay run prep shows on day one (docs/SAMPLE.md, Seeded situations; docs/SPEC.md PAY RUN
+// Moonrise sample: what pay run prep shows on day one (docs/SAMPLE.md, Seeded situations; docs/SPEC.md PAY RUN
 // PREP). Runs last, after hiring, so it never shifts the generated pipelines or the ids of earlier activity rows.
 // - The last six payrolls marked submitted to the PEO on their cutoff days, with the PEO's totals for the two most
 //   recent paydays (Cost and runway shows them as actuals; they fall before the cash date, so runway is unchanged).

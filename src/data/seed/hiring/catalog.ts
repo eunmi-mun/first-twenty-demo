@@ -1,4 +1,4 @@
-// The Ledgerlark hiring story as data (docs/SAMPLE.md): historical filled jobs with each hire's own
+// The Moonrise hiring story as data (docs/SAMPLE.md): historical filled jobs with each hire's own
 // timeline and offer, the open jobs and their pipelines, and the plan slots. Dates are hand-picked
 // business days around the anchor, Friday 2026-10-09. Everything here is fictional.
 // Module rule: functions only (no module-level runtime constants); see rng.ts.

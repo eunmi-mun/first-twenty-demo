@@ -1,4 +1,4 @@
-// Ledgerlark sample: contractors and advisors (docs/SAMPLE.md). Contractors never count toward headcount,
+// Moonrise sample: contractors and advisors (docs/SAMPLE.md). Contractors never count toward headcount,
 // but they do count toward the 5-person harassment training threshold (Gov Code 12950.1). Advisors hold
 // NSO grants (see ./equity) and have no checklist. Functions only (see ./company for why).
 import type { Draft } from 'immer'

@@ -1,4 +1,4 @@
-// Home against the Ledgerlark sample (Fri 2026-10-09): growth announcements stay quiet in an established
+// Home against the Moonrise sample (Fri 2026-10-09): growth announcements stay quiet in an established
 // company, scorecard rows open the sheet, and This week shows both time zones for out-of-zone candidates.
 // The store loads first so every seed and domain module finishes loading before the sample is built.
 import '@/store/db'

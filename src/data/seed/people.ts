@@ -1,4 +1,4 @@
-// Ledgerlark sample: employees 1-15 (docs/SAMPLE.md) with job and pay history, onboarding checklists,
+// Moonrise sample: employees 1-15 (docs/SAMPLE.md) with job and pay history, onboarding checklists,
 // trainings, policies and acknowledgements, documents (status and date only) and Omar's exit.
 // People are added in hire order and each checklist is generated right after its person, so headcount,
 // supervisor status and thresholds are what they were on that date. Hires 16 and 17 (Lucas, Mei) come
@@ -577,7 +577,7 @@ function updatePolicies(db: Draft<DB>): void {
     harassment.effectiveOn = '2025-10-01'
     harassment.link = 'https://example.com/handbook/harassment'
   }
-  // Ledgerlark adopted its first policies on May 1, 2025, and revised the security policy (2.1) for SOC 2.
+  // Moonrise adopted its first policies on May 1, 2025, and revised the security policy (2.1) for SOC 2.
   const aup = db.policies.find((p) => p.id === 'pl-aup')
   if (aup) {
     aup.version = '2.1'
@@ -674,7 +674,7 @@ function toPerson(p: PersonSpec): Person {
     id: p.id,
     firstName: p.first,
     lastName: p.last,
-    workEmail: `${p.first.toLowerCase()}@ledgerlark.com`,
+    workEmail: `${p.first.toLowerCase()}@moonrise.com`,
     title: p.title,
     departmentId: p.departmentId,
     familyId: p.familyId,

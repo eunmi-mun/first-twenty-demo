@@ -116,7 +116,7 @@ function isFreeMailDomain(domain: string): boolean {
 }
 
 /**
- * The company's email domain: 'ledgerlark.com' from the website, else the domain of the founder's work
+ * The company's email domain: 'moonrise.com' from the website, else the domain of the founder's work
  * email (unless it is a personal mail provider), else null. Never guessed from the company name, so a
  * new hire never gets an address on a domain the company may not own.
  */

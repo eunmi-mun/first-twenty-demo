@@ -398,7 +398,7 @@ describe('sick leave policy checks', () => {
 
 describe('packFileName', () => {
   it('names a graduation CSV after the company, pack and date', () => {
-    expect(packFileName('Ledgerlark, Inc.', 'people', '2026-10-10')).toBe('ledgerlark-inc-people-2026-10-10.csv')
+    expect(packFileName('Moonrise, Inc.', 'people', '2026-10-10')).toBe('moonrise-inc-people-2026-10-10.csv')
     expect(packFileName('  ', 'equity-grants', '2026-10-10')).toBe('first-twenty-equity-grants-2026-10-10.csv')
   })
 })

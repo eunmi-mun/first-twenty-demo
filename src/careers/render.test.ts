@@ -106,7 +106,7 @@ describe('live careers pages', () => {
     expect(page).toContain(`<form class="form" id="apply-form" method="post" action="/acme/jobs/${j.slug}/apply" accept-charset="utf-8" novalidate`)
     expect(page).not.toContain('method="dialog"')
     expect(page).not.toMatch(/<script|style=|type="file"/)
-    expect(page).toContain("Your application goes to Ledgerlark's hiring team in First Twenty (a demo server).")
+    expect(page).toContain("Your application goes to Moonrise's hiring team in First Twenty (a demo server).")
     // The demo-server notice comes before the form, on every page, and never calls the company fictional.
     expect(page.indexOf('runs on a First Twenty demo server, where anyone can create a company')).toBeLessThan(page.indexOf('<form'))
     expect(page).not.toContain('fictional')
@@ -147,7 +147,7 @@ describe('live careers pages', () => {
     expect(page).not.toContain('<form')
     expect(page).toContain('<div class="done" id="apply-done" role="status">')
     expect(page).toContain('<h3 class="done__title" id="apply-done-h" tabindex="-1" autofocus>Thanks for applying</h3>')
-    expect(page).toContain("Your application went to Ledgerlark's hiring team in First Twenty (a demo server).")
+    expect(page).toContain("Your application went to Moonrise's hiring team in First Twenty (a demo server).")
     expect(page).toContain('href="/acme/">See all open roles</a>')
     // Nothing left to apply with: no Apply buttons leading to the confirmation.
     expect(page).not.toContain('Apply for this role')

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { generateChecklist } from '@/domain/checklists/generate'
 import { calendarICS, complianceCalendar, contractors1099, estimatePaidInYear, nextBusinessDay } from './calendar'
-import { addContractor, addMany, addPerson, ledgerlarkLite, makeDB } from './testkit'
+import { addContractor, addMany, addPerson, moonriseLite, makeDB } from './testkit'
 
 const ids = (items: Array<{ id: string }>) => items.map((i) => i.id)
 
@@ -120,7 +120,7 @@ describe('dated obligations', () => {
   })
 
   it('includes training due dates and completions', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     db.trainings.push({ id: 't1', personId: 'p-aisha', kind: 'security_awareness', dueOn: '2026-10-08', completedOn: '2026-10-12' })
     const items = complianceCalendar(db, '2026-10-09', '2027-06-30').filter((i) => i.kind === 'training')
     const lucas = items.filter((i) => i.personId === 'p-lucas').map((i) => [i.date, i.title])

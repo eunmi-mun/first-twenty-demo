@@ -5,7 +5,7 @@ import { RENAMED_ROLE_TEMPLATES, SAMPLE_ROLE_TEMPLATES, upgradeRoleTemplateNames
 
 const T = SAMPLE_ROLE_TEMPLATES
 
-describe('SAMPLE_ROLE_TEMPLATES (Ledgerlark)', () => {
+describe('SAMPLE_ROLE_TEMPLATES (Moonrise)', () => {
   it('has the 13 roles with unique ids', () => {
     expect(T.map((t) => t.name)).toEqual([
       'Senior full-stack engineer',

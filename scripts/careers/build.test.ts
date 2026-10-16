@@ -91,13 +91,13 @@ describe('careers site', () => {
     }
   })
 
-  it('says on every page that Ledgerlark is fictional', () => {
-    expect(site.company).toBe('Ledgerlark')
+  it('says on every page that Moonrise is fictional', () => {
+    expect(site.company).toBe('Moonrise')
     for (const [f, page] of html) {
       const notice = /<p class="fiction">([\s\S]*?)<\/p>/.exec(page)
       expect(notice, f).not.toBeNull()
       const words = text(notice?.[1] ?? '')
-      expect(words).toContain('Ledgerlark')
+      expect(words).toContain('Moonrise')
       expect(words).toContain('fictional')
       expect(words).toContain('First Twenty')
     }

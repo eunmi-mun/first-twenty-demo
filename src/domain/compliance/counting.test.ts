@@ -13,7 +13,7 @@ import {
   supervisorSince,
   weeksAtOrAbove,
 } from './counting'
-import { addContractor, addMany, addOffer, addPerson, ledgerlarkLite, makeDB } from './testkit'
+import { addContractor, addMany, addOffer, addPerson, moonriseLite, makeDB } from './testkit'
 
 describe('w2_one_in_ca', () => {
   it('counts every W-2 employee in any state, part-time, interns and people on leave', () => {
@@ -221,7 +221,7 @@ describe('site and location counts', () => {
 
 describe('first crossings and projections', () => {
   it('finds the first date a count reaches n', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     expect(firstDateAtOrAbove(db, 'w2_one_in_ca', 5)).toBe('2025-10-06')
     expect(firstDateAtOrAbove(db, 'w2_plus_contractors', 5)).toBe('2025-08-18')
     expect(firstDateAtOrAbove(db, 'w2_one_in_ca', 15, { after: '2026-10-09' })).toBe('2026-10-19')
@@ -259,7 +259,7 @@ describe('first crossings and projections', () => {
 
 describe('events', () => {
   it('reports each first-time event with its date', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const d = '2026-10-09'
     // The founder has no pay on record, so the first payroll is estimated from the first paid employee.
     expect(eventHit(db, 'first_payroll', d)).toMatchObject({ date: '2025-05-12', personId: 'p-tomas', estimated: true })

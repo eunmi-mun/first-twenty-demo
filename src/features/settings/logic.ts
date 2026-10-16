@@ -206,7 +206,7 @@ function companyStem(companyName: string): string {
   return stem || 'first-twenty'
 }
 
-/** Graduation pack file name: 'ledgerlark-people-2026-10-09.csv'. */
+/** Graduation pack file name: 'moonrise-people-2026-10-09.csv'. */
 export function packFileName(companyName: string, pack: string, date: ISODate): string {
   return `${companyStem(companyName)}-${pack}-${date}.csv`
 }

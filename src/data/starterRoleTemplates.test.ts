@@ -15,7 +15,7 @@ function allText(t: RoleTemplate): string {
 }
 
 /** What only the sample company (an AI close and reconciliation product for controllers) would say. */
-const SAMPLE_COMPANY_WORDS = [/NetSuite/i, /Sage Intacct/i, /QuickBooks/i, /\bQBO\b/, /\bERP\b/, /reconcil/i, /controllers?\b/i, /\bagents?\b/i, /close-agent/i, /\bflux\b/i, /Ledgerlark/i, /financial AI/i]
+const SAMPLE_COMPANY_WORDS = [/NetSuite/i, /Sage Intacct/i, /QuickBooks/i, /\bQBO\b/, /\bERP\b/, /reconcil/i, /controllers?\b/i, /\bagents?\b/i, /close-agent/i, /\bflux\b/i, /Moonrise/i, /financial AI/i]
 
 describe('DEFAULT_ROLE_TEMPLATES (the starters a company that starts fresh gets)', () => {
   it('describes no product, industry or customer of the sample company (the posting goes out with this text)', () => {

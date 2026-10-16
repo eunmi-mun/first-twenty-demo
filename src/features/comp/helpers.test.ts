@@ -302,7 +302,7 @@ describe('board print', () => {
     expect(s.cost.withIncoming).toBeGreaterThan(s.cost.now)
     expect(s.cost.atPlan).toBeGreaterThan(s.cost.withOffers)
     const text = boardText(s)
-    expect(text).toContain('Ledgerlark people update')
+    expect(text).toContain('Moonrise people update')
     expect(text).toContain('Plan:')
     expect(text).not.toContain(String.fromCharCode(0x2014))
     const html = boardHTML(s)

@@ -1,6 +1,6 @@
 import { produce } from 'immer'
 import { describe, expect, it } from 'vitest'
-import { addContractor, addMany, addPerson, ledgerlarkLite, makeDB } from '@/domain/compliance/testkit'
+import { addContractor, addMany, addPerson, moonriseLite, makeDB } from '@/domain/compliance/testkit'
 import type { DB, Person, TrainingKind } from '@/domain/types'
 import { harassmentThresholdReachedOn, openTrainingRows, trainingMatrix, trainingRequirements } from './trainings'
 
@@ -100,7 +100,7 @@ describe('harassment prevention training', () => {
   })
 
   it('matches the sample story dates', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const d = '2026-10-09'
     const get = (id: string) => db.people.find((p) => p.id === id) as Person
     expect(harassmentThresholdReachedOn(db)).toBe('2025-08-18') // Elena plus the Northline contract
@@ -225,7 +225,7 @@ describe('before a scheduled last day', () => {
 
 describe('training matrix', () => {
   it('lists current and incoming people by course, without former employees', () => {
-    const db = ledgerlarkLite()
+    const db = moonriseLite()
     const m = trainingMatrix(db, '2026-10-09')
     expect(m.courses.map((c) => c.course)).toEqual(['harassment', 'security_awareness', 'wvpp'])
     const ids = m.rows.map((r) => r.person.id)

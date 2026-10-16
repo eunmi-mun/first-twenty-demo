@@ -587,8 +587,8 @@ function StartOverPanel({ openFresh }: { openFresh: boolean }) {
             connected
               ? 'Off while this browser is connected to your server: the sample never syncs. Disconnect first in Settings, Server, then reset.'
               : sample
-                ? 'Puts Ledgerlark back the way it started, with dates moved to this week.'
-                : `Replaces ${company} with Ledgerlark, the fictional sample company. Download a backup first.`
+                ? 'Puts Moonrise back the way it started, with dates moved to this week.'
+                : `Replaces ${company} with Moonrise, the fictional sample company. Download a backup first.`
           }
           actions={
             connected ? (
