@@ -1,4 +1,4 @@
-// Primary navigation per docs/SPEC.md: Home, Hiring, People, Comp and plan, Compliance, Settings, Me.
+// Primary navigation per docs/SPEC.md: Home, Hiring, People, Comp and plan, Compliance, HR analysis, Settings, Me.
 // Visibility depends on the Viewing-as mode (src/domain/access.ts).
 import { canSeeSection, type Section } from '@/domain/access'
 import type { Viewer } from '@/domain/types'
@@ -26,6 +26,7 @@ export const NAV: NavItem[] = [
   },
   { key: 'comp', label: 'Comp and plan', icon: 'coins', href: links.comp(), matches: ['comp', 'plan'] },
   { key: 'compliance', label: 'Compliance', icon: 'shield-check', href: links.compliance(), matches: ['compliance'] },
+  { key: 'analysis', label: 'HR analysis', icon: 'chart', href: links.analysis(), matches: ['analysis'] },
   { key: 'me', label: 'Me', icon: 'user', href: links.me(), matches: ['me'] },
   { key: 'settings', label: 'Settings', icon: 'settings', href: links.settings(), matches: ['settings'] },
 ]

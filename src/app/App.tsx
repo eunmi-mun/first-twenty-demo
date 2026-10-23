@@ -125,6 +125,7 @@ const SECTION_TITLES: Record<string, string> = {
   people: 'People',
   comp: 'Comp and plan',
   compliance: 'Compliance',
+  analysis: 'HR analysis',
   me: 'Me',
   settings: 'Settings',
   invite: 'Join a company',

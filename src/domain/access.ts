@@ -12,10 +12,10 @@ import { employedOn, incomingOn, isPeopleManager, reportingLine } from '@/domain
 import type { Application, DB, ID, Job, TimeOffRequest, Viewer } from '@/domain/types'
 import { nowISO } from '@/lib/dates'
 
-export type Section = 'home' | 'hiring' | 'people' | 'comp' | 'compliance' | 'settings' | 'me'
+export type Section = 'home' | 'hiring' | 'people' | 'comp' | 'compliance' | 'analysis' | 'settings' | 'me'
 
 const SECTIONS: Record<Viewer['role'], Section[]> = {
-  admin: ['home', 'hiring', 'people', 'comp', 'compliance', 'settings', 'me'],
+  admin: ['home', 'hiring', 'people', 'comp', 'compliance', 'analysis', 'settings', 'me'],
   manager: ['home', 'hiring', 'people', 'me'],
   employee: ['me', 'people'],
 }

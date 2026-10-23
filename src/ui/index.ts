@@ -1,6 +1,6 @@
 export { Avatar, AvatarStack, Badge, Dot, Kbd, type Tone } from './Badge'
 export { Button, buttonClass, IconButton, TextLink, type ButtonProps } from './Button'
-export { BarList, SegmentBar, Sparkline, StepChart, type BarItem, type StepSeries } from './charts'
+export { BarList, DensityChart, SegmentBar, Sparkline, StepChart, type BarItem, type StepSeries } from './charts'
 export { ChipGroup, ChipMulti, CitationChip, DateChips, type ChipOption } from './Chips'
 export { cx } from './cx'
 export {

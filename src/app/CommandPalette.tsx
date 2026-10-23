@@ -53,6 +53,7 @@ const PAGES: Array<{
   { label: 'Notices and policies', href: links.compliance('notices'), keywords: 'handbook acknowledgements posters', section: 'compliance' },
   { label: 'SOC 2 evidence', href: links.compliance('soc2'), keywords: 'audit evidence controls access review', section: 'compliance' },
   { label: 'Records and retention', href: links.compliance('records'), keywords: 'retention personnel file requests', section: 'compliance' },
+  { label: 'HR analysis', href: links.analysis(), keywords: 'wages pay distribution density statistics charts', section: 'analysis' },
   { label: 'Me', href: links.me(), keywords: 'my profile my pay my equity my time off', section: 'me' },
   { label: 'Settings: company', href: links.settings('company'), keywords: 'company funding cash runway legal name founded stage soc 2 toggle', section: 'settings' },
   {

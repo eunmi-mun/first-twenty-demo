@@ -6,6 +6,7 @@
 import type { ReactNode } from 'react'
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { daysBetween, fmtDate, parseDate, toISODate } from '@/lib/dates'
+import { usePrefs } from '@/store/prefs'
 import { cx } from './cx'
 
 function useWidth<T extends HTMLElement>(fallback = 640) {
@@ -578,5 +579,84 @@ export function Sparkline({
       <path d={d} fill="none" stroke="var(--ink-3)" strokeWidth={1.6} strokeLinejoin="round" />
       <circle cx={lx} cy={ly} r={3.5} fill="var(--accent)" stroke="var(--surface)" strokeWidth={2} />
     </svg>
+  )
+}
+
+/**
+ * Smooth density curve of one measure (wages), with each person as a tick on the baseline and a dashed line at
+ * the median. The vertical axis is relative (taller = more people paid near that amount), so it carries no
+ * numbers; the horizontal axis is dollars and is blurred with the privacy blur (key B).
+ */
+export function DensityChart({
+  points,
+  values,
+  median,
+  height = 240,
+  format,
+  ariaLabel,
+}: {
+  points: Array<{ x: number; y: number }>
+  /** Every individual value, drawn as a tick on the baseline. */
+  values: number[]
+  median?: number
+  height?: number
+  /** Formats an x value for the axis and the median label. */
+  format: (v: number) => string
+  ariaLabel: string
+}) {
+  const [wrapRef, width] = useWidth<HTMLDivElement>()
+  const blur = usePrefs((s) => s.privacyBlur)
+  const padL = 12
+  const padR = 16
+  const padT = 22
+  const padB = 28
+  const innerW = Math.max(60, width - padL - padR)
+  const innerH = height - padT - padB
+  const geo = useMemo(() => {
+    if (points.length < 2) return null
+    const x0 = points[0].x
+    const x1 = points[points.length - 1].x
+    const yMax = Math.max(...points.map((p) => p.y)) * 1.08 || 1
+    const sx = (v: number) => padL + ((v - x0) / (x1 - x0)) * innerW
+    const sy = (v: number) => padT + innerH - (v / yMax) * innerH
+    const line = points.map((p, i) => `${i ? 'L' : 'M'}${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`).join(' ')
+    const area = `${line} L${sx(x1).toFixed(1)},${sy(0)} L${sx(x0).toFixed(1)},${sy(0)} Z`
+    const step = niceStep((x1 - x0) / 1000) * 1000
+    const ticks: number[] = []
+    for (let v = Math.ceil(x0 / step) * step; v <= x1 + 1e-9; v += step) ticks.push(v)
+    return { sx, sy, line, area, ticks }
+  }, [points, innerW, innerH])
+
+  return (
+    <div ref={wrapRef} className={cx('ft-chart ft-chart--density w-full', blur && 'ft-private ft-private--on ft-private--block select-none blur-[6px]')}>
+      {geo ? (
+        <svg width={width} height={height} role="img" aria-label={ariaLabel} className="block">
+          {geo.ticks.map((t) => (
+            <g key={t}>
+              <line x1={geo.sx(t)} x2={geo.sx(t)} y1={padT} y2={geo.sy(0)} stroke="var(--line)" strokeWidth={1} />
+              <text x={geo.sx(t)} y={height - 8} textAnchor="middle" fontSize={12} fill="var(--ink-3)" className="ft-chart__xtick">
+                {format(t)}
+              </text>
+            </g>
+          ))}
+          <line x1={padL} x2={padL + innerW} y1={geo.sy(0)} y2={geo.sy(0)} stroke="var(--line-strong)" strokeWidth={1} />
+          <path d={geo.area} fill="var(--accent)" opacity={0.1} />
+          <path d={geo.line} fill="none" stroke="var(--accent)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          {values.map((v, i) => (
+            <line key={i} x1={geo.sx(v)} x2={geo.sx(v)} y1={geo.sy(0)} y2={geo.sy(0) - 9} stroke="var(--ink-2)" strokeWidth={1.5} strokeLinecap="round" opacity={0.7} />
+          ))}
+          {median != null && (
+            <g>
+              <line x1={geo.sx(median)} x2={geo.sx(median)} y1={padT - 4} y2={geo.sy(0)} stroke="var(--ink)" strokeWidth={1.5} strokeDasharray="5 4" />
+              <text x={geo.sx(median)} y={padT - 8} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink-2)" className="ft-chart__reflabel">
+                Median {format(median)}
+              </text>
+            </g>
+          )}
+        </svg>
+      ) : (
+        <div style={{ height }} />
+      )}
+    </div>
   )
 }

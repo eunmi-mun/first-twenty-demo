@@ -96,6 +96,8 @@ export const links = {
   // Compliance
   compliance: (tab?: 'milestones' | 'calendar' | 'training' | 'notices' | 'soc2' | 'records') => href('compliance', tab),
   rule: (ruleId: string) => href('compliance', 'milestones', ruleId),
+  // HR analysis
+  analysis: () => href('analysis'),
   // Me
   me: (tab?: 'summary' | 'job' | 'equity' | 'timeoff' | 'tasks' | 'profile' | 'roles') => href('me', tab),
   requestTimeOff: () => href('me', 'timeoff', 'request'),

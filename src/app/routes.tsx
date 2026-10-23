@@ -2,6 +2,7 @@
 // See ARCHITECTURE.md (Routes) for every route and which feature owns it.
 import type { ComponentType } from 'react'
 import { CompPage } from '@/features/comp'
+import { AnalysisPage } from '@/features/analysis'
 import { CompliancePage } from '@/features/compliance'
 import { CandidatePage, HiringPage, JobPage } from '@/features/hiring'
 import { HomePage } from '@/features/home'
@@ -23,6 +24,7 @@ export const ROUTES: Record<string, ComponentType<PageProps>> = {
   contractor: ContractorPage,
   comp: CompPage,
   compliance: CompliancePage,
+  analysis: AnalysisPage,
   me: MePage,
   settings: SettingsPage,
   // An invite link from Settings, Server (#invite.<token>): any role, no section.
