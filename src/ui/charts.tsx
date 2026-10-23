@@ -590,18 +590,24 @@ export function Sparkline({
 export function DensityChart({
   points,
   values,
+  markedValues = [],
   median,
   height = 240,
   format,
+  tickUnit = 1000,
   ariaLabel,
 }: {
   points: Array<{ x: number; y: number }>
-  /** Every individual value, drawn as a tick on the baseline. */
+  /** Every individual value, drawn as a short tick on the baseline. */
   values: number[]
+  /** Values to set apart (people who left), drawn as a taller tick. */
+  markedValues?: number[]
   median?: number
   height?: number
   /** Formats an x value for the axis and the median label. */
   format: (v: number) => string
+  /** Axis gridlines land on round multiples of this (1000 for dollars; 1 for months). */
+  tickUnit?: number
   ariaLabel: string
 }) {
   const [wrapRef, width] = useWidth<HTMLDivElement>()
@@ -621,11 +627,11 @@ export function DensityChart({
     const sy = (v: number) => padT + innerH - (v / yMax) * innerH
     const line = points.map((p, i) => `${i ? 'L' : 'M'}${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`).join(' ')
     const area = `${line} L${sx(x1).toFixed(1)},${sy(0)} L${sx(x0).toFixed(1)},${sy(0)} Z`
-    const step = niceStep((x1 - x0) / 1000) * 1000
+    const step = niceStep((x1 - x0) / tickUnit) * tickUnit
     const ticks: number[] = []
     for (let v = Math.ceil(x0 / step) * step; v <= x1 + 1e-9; v += step) ticks.push(v)
     return { sx, sy, line, area, ticks }
-  }, [points, innerW, innerH])
+  }, [points, innerW, innerH, tickUnit])
 
   return (
     <div ref={wrapRef} className={cx('ft-chart ft-chart--density w-full', blur && 'ft-private ft-private--on ft-private--block select-none blur-[6px]')}>
@@ -634,7 +640,7 @@ export function DensityChart({
           {geo.ticks.map((t) => (
             <g key={t}>
               <line x1={geo.sx(t)} x2={geo.sx(t)} y1={padT} y2={geo.sy(0)} stroke="var(--line)" strokeWidth={1} />
-              <text x={geo.sx(t)} y={height - 8} textAnchor="middle" fontSize={12} fill="var(--ink-3)" className="ft-chart__xtick">
+              <text x={geo.sx(t)} y={height - 8} textAnchor={geo.sx(t) < padL + 16 ? 'start' : geo.sx(t) > width - padR - 16 ? 'end' : 'middle'} fontSize={12} fill="var(--ink-3)" className="ft-chart__xtick">
                 {format(t)}
               </text>
             </g>
@@ -644,6 +650,9 @@ export function DensityChart({
           <path d={geo.line} fill="none" stroke="var(--accent)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           {values.map((v, i) => (
             <line key={i} x1={geo.sx(v)} x2={geo.sx(v)} y1={geo.sy(0)} y2={geo.sy(0) - 9} stroke="var(--ink-2)" strokeWidth={1.5} strokeLinecap="round" opacity={0.7} />
+          ))}
+          {markedValues.map((v, i) => (
+            <line key={`m${i}`} x1={geo.sx(v)} x2={geo.sx(v)} y1={geo.sy(0)} y2={geo.sy(0) - 20} stroke="var(--ink)" strokeWidth={2} strokeLinecap="round" />
           ))}
           {median != null && (
             <g>
