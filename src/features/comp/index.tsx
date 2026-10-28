@@ -1,4 +1,4 @@
-// Comp and plan (#comp[.table|.components[.benefits|.equity|.bands]|.plan|.cost|.payruns[.<period start>]]): what we pay, what we've
+// Comp and plan (#comp[.table|.components[.bands|.variable|.benefits|.equity]|.plan|.cost|.payruns[.<period start>]]): what we pay, what we've
 // granted, who we hire next, what it costs, and each pay run prepared for the payroll provider. Admin only; the
 // person panels below are reused by People, Me and Home.
 import type { PageProps } from '@/app/routes'
@@ -16,19 +16,20 @@ import { CostTab } from './CostTab'
 import { EquityTab } from './EquityTab'
 import { PayRunsTab } from './PayRunsTab'
 import { PlanTab } from './PlanTab'
+import { VariableTab } from './VariableTab'
 
 type TabKey = 'table' | 'components' | 'plan' | 'cost' | 'payruns'
 const TABS: TabKey[] = ['table', 'components', 'plan', 'cost', 'payruns']
 // Components groups three pages. Their own links (#comp.equity, #comp.bands, #comp.benefits) still work and open
 // Components on that page, so every link elsewhere in the app keeps landing where it did.
-type SubKey = 'benefits' | 'equity' | 'bands'
-const SUBS: SubKey[] = ['benefits', 'equity', 'bands']
+type SubKey = 'bands' | 'variable' | 'benefits' | 'equity'
+const SUBS: SubKey[] = ['bands', 'variable', 'benefits', 'equity']
 
 export function CompPage({ route }: PageProps) {
   const viewer = useViewer()
   const db = useDB((s) => s.db)
   const seg = route.segments[1]
-  const sub: SubKey = SUBS.includes(seg as SubKey) ? (seg as SubKey) : 'benefits'
+  const sub: SubKey = SUBS.includes(seg as SubKey) ? (seg as SubKey) : 'bands'
   const tab: TabKey = SUBS.includes(seg as SubKey) ? 'components' : TABS.includes(seg as TabKey) ? (seg as TabKey) : 'table'
   if (viewer.role !== 'admin') {
     return (
@@ -52,7 +53,7 @@ export function CompPage({ route }: PageProps) {
         className="mb-5"
         tabs={[
           { key: 'table', label: 'Summary table', href: links.comp('table'), ...(oob ? { count: oob } : {}) },
-          { key: 'components', label: 'Components', href: links.comp('components'), ...(queue ? { count: queue } : {}) },
+          { key: 'components', label: 'Components', href: links.comp('components') },
           { key: 'plan', label: 'Headcount plan', href: links.comp('plan') },
           { key: 'cost', label: 'Cost and runway', href: links.comp('cost') },
           { key: 'payruns', label: 'Pay runs', href: links.comp('payruns') },
@@ -67,14 +68,16 @@ export function CompPage({ route }: PageProps) {
             value={sub}
             className="mb-4"
             tabs={[
+              { key: 'bands', label: 'Base salary', href: links.comp('bands') },
+              { key: 'variable', label: 'Variable pay', href: links.comp('variable') },
               { key: 'benefits', label: 'Benefits', href: links.comp('benefits') },
               { key: 'equity', label: 'Equity', href: links.comp('equity'), ...(queue ? { count: queue } : {}) },
-              { key: 'bands', label: 'Levels and bands', href: links.comp('bands') },
             ]}
           />
+          {sub === 'bands' && <BandsTab />}
+          {sub === 'variable' && <VariableTab />}
           {sub === 'benefits' && <BenefitsTab />}
           {sub === 'equity' && <EquityTab />}
-          {sub === 'bands' && <BandsTab />}
         </>
       )}
       {tab === 'cost' && <CostTab />}

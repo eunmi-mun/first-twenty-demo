@@ -443,7 +443,7 @@ function LevelsPanel() {
       subtitle={
         <>
           The ladder offers and bands use. Band amounts live in{' '}
-          <TextLink href={links.comp('bands')}>Comp and plan, Levels and bands</TextLink>.
+          <TextLink href={links.comp('bands')}>Comp and plan, Base salary</TextLink>.
         </>
       }
       icon="layers"

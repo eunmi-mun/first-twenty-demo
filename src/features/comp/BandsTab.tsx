@@ -1,4 +1,4 @@
-// Levels and bands (docs/SPEC.md, LEVELS AND BANDS): a matrix of job families x levels with min, mid and
+// Base salary, formerly Levels and bands (docs/SPEC.md, LEVELS AND BANDS): a matrix of job families x levels with min, mid and
 // max, the equity guideline and variable or OTE split. Editing a band happens in a sheet and is logged.
 import { useMemo, useState } from 'react'
 import { outOfBand } from '@/domain/pay'
