@@ -145,6 +145,7 @@ const TAB_TITLES: Record<string, string> = {
   plan: 'Headcount plan',
   bands: 'Levels and bands',
   table: 'Comp table',
+  benefits: 'Benefits',
   cost: 'Cost and runway',
   payruns: 'Pay runs',
   templates: 'Checklist templates',
