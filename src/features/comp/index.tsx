@@ -1,4 +1,4 @@
-// Comp and plan (#comp[.plan|.bands|.table|.benefits|.equity|.cost|.payruns[.<period start>]]): what we pay, what we've
+// Comp and plan (#comp[.table|.benefits|.plan|.bands|.equity|.cost|.payruns[.<period start>]]): what we pay, what we've
 // granted, who we hire next, what it costs, and each pay run prepared for the payroll provider. Admin only; the
 // person panels below are reused by People, Me and Home.
 import type { PageProps } from '@/app/routes'
@@ -18,13 +18,13 @@ import { PayRunsTab } from './PayRunsTab'
 import { PlanTab } from './PlanTab'
 
 type TabKey = 'plan' | 'bands' | 'table' | 'benefits' | 'equity' | 'cost' | 'payruns'
-const TABS: TabKey[] = ['plan', 'bands', 'table', 'benefits', 'equity', 'cost', 'payruns']
+const TABS: TabKey[] = ['table', 'benefits', 'plan', 'bands', 'equity', 'cost', 'payruns']
 
 export function CompPage({ route }: PageProps) {
   const viewer = useViewer()
   const db = useDB((s) => s.db)
   const seg = route.segments[1] as TabKey | undefined
-  const tab: TabKey = seg && TABS.includes(seg) ? seg : 'plan'
+  const tab: TabKey = seg && TABS.includes(seg) ? seg : 'table'
   if (viewer.role !== 'admin') {
     return (
       <>
@@ -46,10 +46,10 @@ export function CompPage({ route }: PageProps) {
         value={tab}
         className="mb-5"
         tabs={[
-          { key: 'plan', label: 'Headcount plan', href: links.comp('plan') },
-          { key: 'bands', label: 'Levels and bands', href: links.comp('bands') },
           { key: 'table', label: 'Comp table', href: links.comp('table'), ...(oob ? { count: oob } : {}) },
           { key: 'benefits', label: 'Benefits', href: links.comp('benefits') },
+          { key: 'plan', label: 'Headcount plan', href: links.comp('plan') },
+          { key: 'bands', label: 'Levels and bands', href: links.comp('bands') },
           { key: 'equity', label: 'Equity', href: links.comp('equity'), ...(queue ? { count: queue } : {}) },
           { key: 'cost', label: 'Cost and runway', href: links.comp('cost') },
           { key: 'payruns', label: 'Pay runs', href: links.comp('payruns') },
