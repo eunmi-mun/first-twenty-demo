@@ -1,4 +1,4 @@
-// Comp and plan (#comp[.table|.benefits|.equity|.plan|.bands|.cost|.payruns[.<period start>]]): what we pay, what we've
+// Comp and plan (#comp[.table|.components[.benefits|.equity|.bands]|.plan|.cost|.payruns[.<period start>]]): what we pay, what we've
 // granted, who we hire next, what it costs, and each pay run prepared for the payroll provider. Admin only; the
 // person panels below are reused by People, Me and Home.
 import type { PageProps } from '@/app/routes'
@@ -17,14 +17,19 @@ import { EquityTab } from './EquityTab'
 import { PayRunsTab } from './PayRunsTab'
 import { PlanTab } from './PlanTab'
 
-type TabKey = 'plan' | 'bands' | 'table' | 'benefits' | 'equity' | 'cost' | 'payruns'
-const TABS: TabKey[] = ['table', 'benefits', 'equity', 'plan', 'bands', 'cost', 'payruns']
+type TabKey = 'table' | 'components' | 'plan' | 'cost' | 'payruns'
+const TABS: TabKey[] = ['table', 'components', 'plan', 'cost', 'payruns']
+// Components groups three pages. Their own links (#comp.equity, #comp.bands, #comp.benefits) still work and open
+// Components on that page, so every link elsewhere in the app keeps landing where it did.
+type SubKey = 'benefits' | 'equity' | 'bands'
+const SUBS: SubKey[] = ['benefits', 'equity', 'bands']
 
 export function CompPage({ route }: PageProps) {
   const viewer = useViewer()
   const db = useDB((s) => s.db)
-  const seg = route.segments[1] as TabKey | undefined
-  const tab: TabKey = seg && TABS.includes(seg) ? seg : 'table'
+  const seg = route.segments[1]
+  const sub: SubKey = SUBS.includes(seg as SubKey) ? (seg as SubKey) : 'benefits'
+  const tab: TabKey = SUBS.includes(seg as SubKey) ? 'components' : TABS.includes(seg as TabKey) ? (seg as TabKey) : 'table'
   if (viewer.role !== 'admin') {
     return (
       <>
@@ -47,19 +52,31 @@ export function CompPage({ route }: PageProps) {
         className="mb-5"
         tabs={[
           { key: 'table', label: 'Summary table', href: links.comp('table'), ...(oob ? { count: oob } : {}) },
-          { key: 'benefits', label: 'Benefits', href: links.comp('benefits') },
-          { key: 'equity', label: 'Equity', href: links.comp('equity'), ...(queue ? { count: queue } : {}) },
+          { key: 'components', label: 'Components', href: links.comp('components'), ...(queue ? { count: queue } : {}) },
           { key: 'plan', label: 'Headcount plan', href: links.comp('plan') },
-          { key: 'bands', label: 'Levels and bands', href: links.comp('bands') },
           { key: 'cost', label: 'Cost and runway', href: links.comp('cost') },
           { key: 'payruns', label: 'Pay runs', href: links.comp('payruns') },
         ]}
       />
       {tab === 'plan' && <PlanTab />}
-      {tab === 'bands' && <BandsTab />}
       {tab === 'table' && <CompTableTab />}
-      {tab === 'benefits' && <BenefitsTab />}
-      {tab === 'equity' && <EquityTab />}
+      {tab === 'components' && (
+        <>
+          <Tabs<SubKey>
+            label="Components sections"
+            value={sub}
+            className="mb-4"
+            tabs={[
+              { key: 'benefits', label: 'Benefits', href: links.comp('benefits') },
+              { key: 'equity', label: 'Equity', href: links.comp('equity'), ...(queue ? { count: queue } : {}) },
+              { key: 'bands', label: 'Levels and bands', href: links.comp('bands') },
+            ]}
+          />
+          {sub === 'benefits' && <BenefitsTab />}
+          {sub === 'equity' && <EquityTab />}
+          {sub === 'bands' && <BandsTab />}
+        </>
+      )}
       {tab === 'cost' && <CostTab />}
       {tab === 'payruns' && <PayRunsTab segment={route.segments[2]} />}
     </>
