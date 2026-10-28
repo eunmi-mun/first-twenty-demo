@@ -1,19 +1,18 @@
-// Comp table (docs/SPEC.md, LEVELS AND BANDS): everyone's base, variable, band position dot on a min-max
-// track, compa-ratio, last change date and reason, exception reason, out-of-band and below-exempt-floor
-// flags. Sortable, CSV export (with Copy), and every amount goes through <Money>/<Private>.
+// Summary table (was Comp table; docs/SPEC.md, LEVELS AND BANDS): everyone's base, variable, benefits cost, equity held and vested,
+// last change date and reason, exception reason, out-of-band and below-exempt-floor flags. Sortable, CSV export (with Copy), and every amount goes through <Money>/<Private>.
 import { useMemo, useState } from 'react'
 import { links } from '@/app/router'
-import { compTable, type CompTableRow, exemptFlags, outOfBand } from '@/domain/pay'
+import { grantsFor, sharesHeld, vestedHeld } from '@/domain/equity'
+import { BENEFITS_MIN_HOURS, benefitsBasis, compTable, type CompTableRow, exemptFlags, outOfBand } from '@/domain/pay'
 import type { ID } from '@/domain/types'
 import { fmtDate, fmtShort, today } from '@/lib/dates'
 import { copyText, downloadFile } from '@/lib/files'
-import { money2, pct } from '@/lib/format'
+import { money2, num, pct } from '@/lib/format'
 import { useDB } from '@/store/db'
 import { Badge, Button, CitationChip, DataTable, EmptyState, IconButton, Money, Panel, Private, Segmented, Select, toast, type Column } from '@/ui'
 import { LAW_SOURCES } from '@/data/law'
 import { ChangeJobSheet } from './ChangeJobSheet'
 import { compTableCSV, median, REASON_LABEL } from './helpers'
-import { BandTrack } from './shared'
 
 type Filter = 'all' | 'flags' | 'incoming'
 
@@ -35,15 +34,32 @@ export function CompTableTab() {
   const med = median(ratios)
   const incoming = rows.filter((r) => r.incoming).length
   const levelCode = (id: ID) => db.levels.find((l) => l.id === id)?.code ?? ''
+  const basis = benefitsBasis(db.company)
+  const perHead = db.company.costModel.benefitsPerHeadMonthly
+  // Employer benefits cost a month: the per-person figure for people at 30+ hours a week, none with no group plan.
+  const benefitCost = (r: CompTableRow) => (basis !== 'none' && r.hoursPerWeek >= BENEFITS_MIN_HOURS ? perHead : 0)
+  const equityOf = useMemo(() => {
+    const out = new Map<ID, { held: number; vested: number; awaitingBoard: boolean; offerOut: boolean }>()
+    for (const r of rows) {
+      const grants = grantsFor(db, r.personId)
+      out.set(r.personId, {
+        held: grants.reduce((n, g) => n + sharesHeld(g, date), 0),
+        vested: grants.reduce((n, g) => n + vestedHeld(db, g, date), 0),
+        awaitingBoard: grants.some((g) => g.status === 'promised'),
+        offerOut: grants.some((g) => g.status === 'reserved'),
+      })
+    }
+    return out
+  }, [db, rows, date])
 
   const exportCSV = () => {
     const csv = compTableCSV(db, shown, date)
     const ok = downloadFile(`comp-table-${date}.csv`, csv, 'text/csv;charset=utf-8')
-    toast(ok ? 'Comp table CSV downloaded' : { text: 'Downloads are blocked here. Use Copy CSV instead.', tone: 'bad' })
+    toast(ok ? 'Summary table CSV downloaded' : { text: 'Downloads are blocked here. Use Copy CSV instead.', tone: 'bad' })
   }
   const copyCSV = async () => {
     const ok = await copyText(compTableCSV(db, shown, date))
-    toast(ok ? 'Comp table CSV copied' : { text: 'Copying is blocked here', tone: 'bad' })
+    toast(ok ? 'Summary table CSV copied' : { text: 'Copying is blocked here', tone: 'bad' })
   }
 
   const columns: Array<Column<CompTableRow>> = [
@@ -99,20 +115,41 @@ export function CompTableTab() {
         ),
     },
     {
-      key: 'band',
-      header: 'Band position, compa-ratio',
-      sort: (r) => r.compaRatio,
+      key: 'benefits',
+      header: 'Benefits',
+      align: 'right',
+      sort: (r) => benefitCost(r),
       cell: (r) =>
-        r.band ? (
-          <div className="w-[180px]">
-            <BandTrack band={r.band} base={r.fteBase} />
-            <span className="text-[12px] text-ink-2">
-              {r.bandLabel}, <Private>{r.compaRatio != null ? r.compaRatio.toFixed(2) : ''}</Private>
-            </span>
-          </div>
+        benefitCost(r) > 0 ? (
+          <span className="whitespace-nowrap">
+            <Money value={benefitCost(r)} />
+            <span className="block text-[12px] text-ink-3">{r.incoming ? 'a month from start' : 'a month'}</span>
+          </span>
         ) : (
-          <span className="text-ink-3">No band</span>
+          <span className="text-ink-3">
+            None
+            <span className="block text-[12px]">{basis === 'none' ? 'No group plan' : `Under ${BENEFITS_MIN_HOURS} hours a week`}</span>
+          </span>
         ),
+    },
+    {
+      key: 'equity',
+      header: 'Equity',
+      align: 'right',
+      sort: (r) => equityOf.get(r.personId)?.held ?? 0,
+      cell: (r) => {
+        const e = equityOf.get(r.personId)
+        if (!e || e.held <= 0) return <span className="text-ink-3">None</span>
+        return (
+          <span className="whitespace-nowrap">
+            <Private>{num(e.held)}</Private> shares
+            <span className="block text-[12px] text-ink-3">
+              <Private>{num(e.vested)}</Private> vested
+              {e.awaitingBoard ? ', awaiting board' : e.offerOut ? ', offer out' : ''}
+            </span>
+          </span>
+        )
+      },
     },
     {
       key: 'last',
@@ -229,7 +266,7 @@ export function CompTableTab() {
           rowHref={(r) => links.person(r.personId, 'job')}
           initialSort={{ key: 'name', dir: 'asc' }}
           dense
-          caption="Comp table"
+          caption="Summary table"
           empty={<EmptyState compact title="Nobody matches this filter" />}
         />
       </Panel>
